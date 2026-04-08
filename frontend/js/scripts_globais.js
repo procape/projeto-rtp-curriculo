@@ -175,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Sidebar
+// 5.Sidebar
 
 const sidebar = document.getElementById('sidebar');
 
@@ -185,4 +185,25 @@ sidebar.addEventListener('mouseenter', () => {
 
 sidebar.addEventListener('mouseleave', () => {
   sidebar.classList.add('collapsed');
+});
+
+
+// 6. REMOVER TELA DE LOADING (Fora do DOMContentLoaded)
+
+window.addEventListener('load', function () {
+    // Busca o ID com HÍFEN, igual está no seu HTML
+    const telaLoading = document.getElementById('tela-loading');
+
+    if (telaLoading) {
+        // Mudei para 800ms. Dá tempo de ver o coração bater 1x e já entra no sistema.
+        setTimeout(function () {
+            telaLoading.style.opacity = '0'; // Deixa transparente suavemente
+
+            // Espera a transição do CSS terminar (meio segundo) e apaga a div de vez
+            setTimeout(function () {
+                telaLoading.style.display = 'none'; 
+            }, 500);
+
+        }, 2000); 
+    }
 });

@@ -1,7 +1,4 @@
 /* Classes para o Azul Primário */
-:root {
-    --vermelho: #1D4587;
-}
 
 .text-marca-azul {
     color: #1D4587 !important;

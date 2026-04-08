@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - cadastro de curriculos</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="loading.css">
+    <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
+</head>
+
+<body class="bg-light">
+
+    <div id="tela-loading" class="loading-overlay">
+        <img src="assets/logo.png" alt="Carregando..." class="logo-heartbeat">
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center min-vh-100 py-5">
+        <div class="card shadow rounded-4 border-0 p-0 text-start" style="width: 450px; max-width: 95%;">
+
+            <div class="p-3 rounded-top-4 text-center" style="background-color: #B22222; border-bottom: 2px solid #990000;">
+                <h3 class="m-0 text-white fw-bold h4">ACESSO AO SISTEMA</h3>
+            </div>
+
+            <div class="card-body p-4 pt-4">
+                <form method="POST" action="" class="mb-0">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="email" class="form-label mb-1 fw-bold text-dark"><small>E-mail</small></label>
+                            <input type="email" name="email" id="email" maxlength="150" placeholder="Digite seu e-mail" class="form-control p-2" required>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label for="senha" class="form-label mb-0 fw-bold text-dark"><small>Senha</small></label>
+                                <a href="recuperar_senha.html" class="text-decoration-none" style="color: #1D4587; font-size: 0.8rem; font-weight: 600;">Esqueceu a senha?</a>
+                            </div>
+
+                            <div class="input-group">
+                                <input type="password" name="senha" id="senha" maxlength="50" placeholder="••••••••" class="form-control p-2 border-end-0" required>
+                                <button class="btn border border-start-0 bg-white text-secondary" type="button" id="btn_olho_senha">
+                                    <i class="bi bi-eye-slash" id="icone_senha"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn fw-bold p-2 shadow-sm rounded-3 text-white w-100" style="background-color: #B22222; border: none; border-bottom: 2px solid #990000; transition: 0.3s;" onmouseover="this.style.backgroundColor='#990000';" onmouseout="this.style.backgroundColor='#B22222';">
+                            ENTRAR
+                        </button>
+                    </div>
+
+                    <p class="text-center mt-4 mb-0 text-secondary">
+                        <small>Não tem uma conta? <a href="registro.html" class="text-decoration-none fw-bold" style="color: #1D4587;">Registre-se aqui</a></small>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="js/scripts_globais.js"></script>
+
+</body>
+</html>

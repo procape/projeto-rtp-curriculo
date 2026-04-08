@@ -1,0 +1,31 @@
+/* Container que cobre a tela toda por cima do sistema */
+.loading-overlay {
+    position: fixed; /* Isso impede de quebrar o layout */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Fica na frente de tudo */
+    transition: opacity 0.5s ease; /* Efeito suave ao sumir */
+}
+
+/* A classe da imagem */
+.logo-heartbeat {
+    width: 25rem;
+    height: auto;
+    animation: heartbeat 1.5s infinite;
+}
+
+/* A animação do batimento */
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.08); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.08); }
+    60% { transform: scale(1); }
+    100% { transform: scale(1); }
+}
