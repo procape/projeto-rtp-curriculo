@@ -43,3 +43,31 @@
     border-color: #86b7fe !important;
     outline: 0;
 }
+
+
+/* tela meu curriculo */
+.info-label {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-bottom: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.info-valor {
+    font-size: 1.05rem;
+    color: #212529;
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+    word-wrap: break-word;
+}
+
+.sessao-titulo {
+    color: #1D4587;
+    
+    font-weight: bold;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
