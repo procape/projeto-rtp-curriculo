@@ -1,0 +1,48 @@
+/* Classes para o Azul Primário */
+:root {
+    --vermelho: #1D4587;
+}
+
+.text-marca-azul {
+    color: #1D4587 !important;
+}
+
+.btn-marca-azul {
+    background-color: #1D4587;
+    color: white;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-marca-azul:hover {
+    background-color: #122f5c;
+
+    color: white;
+}
+
+/* Classes para o Vermelho de Destaque */
+.text-marca-vermelho {
+    color: #C22026 !important;
+}
+
+.btn-marca-vermelho-outline {
+    color: #C22026;
+    background-color: transparent;
+    border: 1px solid #C22026;
+}
+
+.btn-marca-vermelho-outline:hover {
+    background-color: #C22026;
+    color: white;
+}
+
+/* Login */
+.input-group .form-control:focus {
+    box-shadow: none;
+    border-color: #86b7fe;
+}
+
+.input-group .form-control:focus+.btn {
+    border-color: #86b7fe !important;
+    outline: 0;
+}
