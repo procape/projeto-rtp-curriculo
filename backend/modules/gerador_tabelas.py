@@ -30,62 +30,17 @@ class CreateTables():
             Column('nome_completo', String(100), nullable=False),
             Column('email', String(100), nullable=False, unique=True),
             Column('telefone', Integer, nullable=False),
-            Column('cidade', String(150), nullable=False),
-            Column('estado', String(2), nullable=False),
-            Column('linkedin', String(100), unique=True),
-            Column('portfolio', String(100)),
-            Column('objetivo', String(100)),
+            Column('rua_logradouro', String(200), nullable=False),
+            Column('bairro', String(100), nullable=False),
+            Column('cidade', String(100), nullable=False),
+            Column('escolaridade', String(100), nullable=False),
+            Column('experiencia', String(50), nullable=True),
+            Column('atuacao', String(150), nullable=False),
+            Column('habilidades', String(255), nullable=False),
             Column('observacoes', String(255)),
             Column('data_cad', DateTime, server_default=func.now()),
             Column('data_updt', DateTime, onupdate=func.now()),
-            Column('user_id', Integer, ForeignKey('usuario.id'), nullable=False)
+            Column('user_id', Integer, ForeignKey('usuario.id', ondelete='SET NULL'), nullable=True)
         )
-        
-        formacoes = Table(
-            'formacoes', meta,
-            Column('id', Integer, primary_key=True, autoincrement=True),
-            Column('curso', String(45), nullable=False),
-            Column('instituicao', String(45), nullable=False),
-            Column('nivel', String(45), nullable=False),
-            Column('inicio', Date, nullable=False),
-            Column('fim', Date),
-            Column('status', String(45))
-        )
-        
-        habilidades = Table(
-            'habilidades', meta,
-            Column('id', Integer, primary_key=True, autoincrement=True),
-            Column('habilidades', String(45), nullable=False),
-            Column('nivel', String(45), nullable=False)
-        )
-        
-        experiencias = Table(
-            'experiencias', meta,
-            Column('id', Integer, primary_key=True, autoincrement=True),
-            Column('empresa', String(45), nullable=False),
-            Column('cargo', String(45), nullable=False),
-            Column('inicio', Date, nullable=False),
-            Column('fim', Date),
-            Column('status', String(45), nullable=False)
-        )
-        
-        residente_formacoes = Table(
-            'residente_formacoes', meta,
-            Column('res_id', Integer, ForeignKey('curriculo.id'), nullable=False),
-            Column('form_id', Integer, ForeignKey('formacoes.id'), nullable=False)
-        )
-        
-        residente_habilidades = Table(
-            'residente_habilidades', meta,
-            Column('res_id', Integer, ForeignKey('curriculo.id'), nullable=False),
-            Column('hab_id', Integer, ForeignKey('habilidades.id'), nullable=False)
-        )
-        
-        residente_experiencias = Table(
-            'residente_experiencias', meta,
-            Column('res_id', Integer, ForeignKey('curriculo.id'), nullable=False),
-            Column('exp_id', Integer, ForeignKey('experiencias.id'), nullable=False)
-        )
-        
         meta.create_all(engine)
 teste = CreateTables()

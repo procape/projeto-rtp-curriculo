@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, MetaData, insert, select
+from sqlalchemy import create_engine, MetaData, insert, select, update, delete
 import sys
 import os
 diretorio_atual = os.path.dirname(os.path.abspath(__file__))
@@ -24,3 +24,14 @@ class Curriculo():
             lista = conn.execute(select(self.curr))
             curr_list = [dict(r._mapping) for r in lista]
             return curr_list
+    def updt(self, id_curriculo, dados):
+        with engine.begin() as conn:
+            info = (update(self.curr)
+                    .where(self.curr.c.id == id_curriculo)
+                    .values(dados))
+            conn.execute(info)
+            
+    def remove(self, id_curr):
+        with engine.begin() as conn:
+            info = (delete(self.curr).where(self.curr.c.id == id_curr))
+            conn.execute(info)
