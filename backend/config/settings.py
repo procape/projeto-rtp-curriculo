@@ -1,0 +1,5 @@
+codigo_server = "localhost"
+porta = "3306"
+user = "root"
+senha = "senha_nao_e_toor"
+banco = "db_rtp"
