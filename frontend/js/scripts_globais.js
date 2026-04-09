@@ -1,6 +1,6 @@
 // O evento DOMContentLoaded garante que o JS espere o HTML carregar primeiro
 document.addEventListener("DOMContentLoaded", function () {
- 
+
   // Bloqueia números (apenas letras)
   const camposLetras = document.querySelectorAll(".apenas-letras");
   camposLetras.forEach(function (campo) {
@@ -17,9 +17,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
- 
+
   // 2. FUNÇÃO: MOSTRAR / OCULTAR SENHA (Olho)
-  
+
   function configurarOlho(idBotao, idInput, idIcone) {
     const btn = document.getElementById(idBotao);
     const input = document.getElementById(idInput);
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   // 4. BUSCA DE CEP AUTOMÁTICA (ViaCEP)
- 
+
   const campoCep = document.getElementById('cep');
 
   // Só vai rodar a lógica se o campo de CEP existir na tela
@@ -145,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
               document.getElementById('bairro').value = dados.bairro;
               document.getElementById('cidade').value = dados.localidade;
               document.getElementById('estado').value = dados.uf;
-              
+
               // Joga o cursor para o campo de número
               document.getElementById('numero').focus();
             } else {
@@ -175,35 +175,37 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// 5.Sidebar
-
+// 5. Sidebar
 const sidebar = document.getElementById('sidebar');
 
-sidebar.addEventListener('mouseenter', () => {
-  sidebar.classList.remove('collapsed');
-});
+// O "if" garante que o código não quebre nas telas que NÃO têm sidebar (como o Login)
+if (sidebar) {
+  sidebar.addEventListener('mouseenter', () => {
+    sidebar.classList.remove('collapsed');
+  });
 
-sidebar.addEventListener('mouseleave', () => {
-  sidebar.classList.add('collapsed');
-});
+  sidebar.addEventListener('mouseleave', () => {
+    sidebar.classList.add('collapsed');
+  });
+}
 
 
 // 6. REMOVER TELA DE LOADING (Fora do DOMContentLoaded)
 
 window.addEventListener('load', function () {
-    // Busca o ID com HÍFEN, igual está no seu HTML
-    const telaLoading = document.getElementById('tela-loading');
+  // Busca o ID com HÍFEN, igual está no seu HTML
+  const telaLoading = document.getElementById('tela-loading');
 
-    if (telaLoading) {
-        // Mudei para 800ms. Dá tempo de ver o coração bater 1x e já entra no sistema.
-        setTimeout(function () {
-            telaLoading.style.opacity = '0'; // Deixa transparente suavemente
+  if (telaLoading) {
+    // Mudei para 800ms. Dá tempo de ver o coração bater 1x e já entra no sistema.
+    setTimeout(function () {
+      telaLoading.style.opacity = '0'; // Deixa transparente suavemente
 
-            // Espera a transição do CSS terminar (meio segundo) e apaga a div de vez
-            setTimeout(function () {
-                telaLoading.style.display = 'none'; 
-            }, 500);
+      // Espera a transição do CSS terminar (meio segundo) e apaga a div de vez
+      setTimeout(function () {
+        telaLoading.style.display = 'none';
+      }, 500);
 
-        }, 2000); 
-    }
+    }, 2000);
+  }
 });
