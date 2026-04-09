@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Currículo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-light">
+    <div class="d-flex justify-content-center align-items-center min-vh-100 bg-light py-5">
+
+        <div class="card shadow rounded-4 border-0 p-0 text-start" style="width: 800px; max-width: 95%;">
+
+            <div class="p-3 rounded-top-4 text-center"
+                style="background-color: #B22222; border-bottom: 2px solid #990000;">
+                <h3 class="m-0 text-white fw-bold h4">CADASTRAR CURRÍCULO</h3>
+            </div>
+
+            <div class="card-body p-4 pt-5">
+                <form method="POST" class="mb-0">
+                    <div class="row g-3">
+
+                        <div class="col-md-12">
+                            <label for="nome_completo"
+                                class="form-label mb-1 fw-bold text-dark "><small>Nome Completo
+                                    <span class="text-danger">*</span></small></label>
+                            <input type="text" name="nome_completo" id="nome_completo" maxlength="100"
+                                placeholder="Nome Completo" class="form-control p-2 apenas-letras" required>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="email" class="form-label mb-1 fw-bold text-dark"><small>E-mail <span
+                                        class="text-danger">*</span></small></label>
+                            <input type="email" name="email" id="email" maxlength="150" placeholder="seu@email.com"
+                                class="form-control p-2" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="telefone"
+                                class="form-label mb-1 fw-bold text-dark "><small>Telefone/Contato
+                                    <span class="text-danger">*</span></small></label>
+                            <input type="text" name="telefone" id="telefone" maxlength="11"
+                                placeholder="(00) 00000-0000" class="form-control p-2 apenas-numeros" required>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="cep" class="form-label mb-1 fw-bold text-dark"><small>CEP <span
+                                        class="text-danger">*</span></small></label>
+                            <input type="text" name="cep" id="cep" maxlength="9" placeholder="00000-000"
+                                class="form-control p-2 apenas-numeros" required>
+                        </div>
+                        <div class="col-md-7">
+                            <label for="logradouro" class="form-label mb-1 fw-bold text-dark"><small>Rua /
+                                    Logradouro</small></label>
+                            <input type="text" name="logradouro" id="logradouro" maxlength="150"
+                                class="form-control p-2 bg-body-secondary" required readonly>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="numero" class="form-label mb-1 fw-bold text-dark"><small>Número <span
+                                        class="text-danger">*</span></small></label>
+                            <input type="text" name="numero" id="numero" maxlength="10" class="form-control p-2"
+                                required>
+                        </div>
+
+                        <div class="col-md-5">
+                            <label for="bairro" class="form-label mb-1 fw-bold text-dark"><small>Bairro</small></label>
+                            <input type="text" name="bairro" id="bairro" maxlength="100"
+                                class="form-control p-2 bg-body-secondary" required readonly>
+                        </div>
+                        <div class="col-md-5">
+                            <label for="cidade" class="form-label mb-1 fw-bold text-dark"><small>Cidade</small></label>
+                            <input type="text" name="cidade" id="cidade" maxlength="100"
+                                class="form-control p-2 bg-body-secondary" required readonly>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="estado" class="form-label mb-1 fw-bold text-dark"><small>UF</small></label>
+                            <input type="text" name="estado" id="estado" maxlength="2"
+                                class="form-control p-2 bg-body-secondary" required readonly>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="escolaridade" class="form-label mb-1 fw-bold text-dark"><small>Escolaridade
+                                    <span class="text-danger">*</span></small></label>
+                            <select name="escolaridade" id="escolaridade" class="form-select p-2" required>
+                                <option value="" selected disabled>Selecione...</option>
+                                <option value="Ensino Médio">Ensino Médio</option>
+                                <option value="Ensino Técnico">Ensino Técnico</option>
+                                <option value="Ensino Superior">Ensino Superior</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="tempo_experiencia" class="form-label mb-1 fw-bold text-dark"><small>Tempo de
+                                    Experiência</small></label>
+                            <input type="text" name="tempo_experiencia" id="tempo_experiencia" maxlength="30"
+                                placeholder="Ex: 2 anos" class="form-control p-2">
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="area_atuacao" class="form-label mb-1 fw-bold text-dark"><small>Área de Atuação
+                                    <span class="text-danger">*</span></small></label>
+                            <input type="text" name="area_atuacao" id="area_atuacao" maxlength="100"
+                                placeholder="Ex: Desenvolvimento Web" class="form-control p-2" required>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="habilidades_tecnicas"
+                                class="form-label mb-1 fw-bold text-dark"><small>Habilidades Técnicas</small></label>
+                            <textarea name="habilidades_tecnicas" id="habilidades_tecnicas" maxlength="500" rows="2"
+                                placeholder="HTML, CSS, JavaScript, React, Bootstrap..."
+                                class="form-control p-2"></textarea>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label for="observacoes" class="form-label mb-1 fw-bold text-dark"><small>Observações
+                                    Adicionais</small></label>
+                            <textarea name="observacoes" id="observacoes" maxlength="500" rows="2"
+                                placeholder="Disponibilidade, portfólio, etc." class="form-control p-2 mb-3"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-3 mb-2">
+                        <button type="submit" class="btn fw-bold p-2 shadow-sm rounded-3 text-white"
+                            style="background-color: #B22222; width: 300px; border: none; border-bottom: 2px solid #990000; transition: 0.3s;"
+                            onmouseover="this.style.backgroundColor='#990000';"
+                            onmouseout="this.style.backgroundColor='#B22222';">
+                            SALVAR CURRÍCULO
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script src="js/scripts_globais.js"></script>
+</body>
+
+</html>

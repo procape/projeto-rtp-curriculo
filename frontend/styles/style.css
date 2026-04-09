@@ -1,0 +1,73 @@
+/* Classes para o Azul Primário */
+
+.text-marca-azul {
+    color: #1D4587 !important;
+}
+
+.btn-marca-azul {
+    background-color: #1D4587;
+    color: white;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-marca-azul:hover {
+    background-color: #122f5c;
+
+    color: white;
+}
+
+/* Classes para o Vermelho de Destaque */
+.text-marca-vermelho {
+    color: #C22026 !important;
+}
+
+.btn-marca-vermelho-outline {
+    color: #C22026;
+    background-color: transparent;
+    border: 1px solid #C22026;
+}
+
+.btn-marca-vermelho-outline:hover {
+    background-color: #C22026;
+    color: white;
+}
+
+/* Login */
+.input-group .form-control:focus {
+    box-shadow: none;
+    border-color: #86b7fe;
+}
+
+.input-group .form-control:focus+.btn {
+    border-color: #86b7fe !important;
+    outline: 0;
+}
+
+
+/* tela meu curriculo */
+.info-label {
+    font-size: 0.8rem;
+    color: #6c757d;
+    margin-bottom: 0;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.info-valor {
+    font-size: 1.05rem;
+    color: #212529;
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+    word-wrap: break-word;
+}
+
+.sessao-titulo {
+    color: #1D4587;
+    
+    font-weight: bold;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
