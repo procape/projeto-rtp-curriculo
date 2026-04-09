@@ -10,64 +10,73 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon">
-    
-   
+    <link rel="stylesheet" href="../styles/style.css">
+
 </head>
 
 <body class="bg-light">
     <div class="d-flex justify-content-center align-items-center min-vh-100 py-5">
-        
+
         <div class="card shadow rounded-4 border-0 p-0 text-start" style="width: 450px; max-width: 95%;">
-            
-            <div class="p-3 rounded-top-4 text-center" style="background-color: #B22222; border-bottom: 2px solid #990000;">
+
+            <div class="p-3 rounded-top-4 text-center"
+                style="background-color: #B22222; border-bottom: 2px solid #990000;">
                 <h3 class="m-0 text-white fw-bold h4">CRIAR NOVA SENHA</h3>
             </div>
 
             <div class="card-body p-4 pt-4">
-                
+
                 <p class="text-secondary mb-4 text-center" style="font-size: 0.95rem;">
                     Digite sua nova senha abaixo. Certifique-se de usar uma senha forte.
                 </p>
 
                 <form method="POST" action="" class="mb-0">
                     <div class="row g-3">
-                        
+
                         <div class="col-12">
-                            <label for="senha" class="form-label mb-1 fw-bold text-dark"><small>Nova Senha <span class="text-danger">*</span></small></label>
-                            
+                            <label for="senha" class="form-label mb-1 fw-bold text-dark"><small>Nova Senha <span
+                                        class="text-danger">*</span></small></label>
+
                             <div class="input-group">
-                                <input type="password" name="nova_senha" id="senha" maxlength="50" placeholder="••••••••" class="form-control p-2 border-end-0" required>
-                                <button class="btn border border-start-0 bg-white text-secondary" type="button" id="btn_olho_senha">
+                                <input type="password" name="nova_senha" id="senha" maxlength="50"
+                                    placeholder="••••••••" class="form-control p-2 border-end-0" required>
+                                <button class="btn border border-start-0 bg-white text-secondary" type="button"
+                                    id="btn_olho_senha">
                                     <i class="bi bi-eye-slash" id="icone_senha"></i>
                                 </button>
                             </div>
-                            
+
                             <div class="progress mt-2" style="height: 5px;">
                                 <div id="barra_forca" class="progress-bar" role="progressbar" style="width: 0%;"></div>
                             </div>
-                            <small id="texto_forca" class="text-muted fw-semibold" style="font-size: 0.75rem;">Mínimo de 8 caracteres.</small>
+                            <small id="texto_forca" class="text-muted fw-semibold" style="font-size: 0.75rem;">Mínimo de
+                                8 caracteres.</small>
                         </div>
 
                         <div class="col-12 mt-3">
-                            <label for="confirmar_senha" class="form-label mb-1 fw-bold text-dark"><small>Repetir Nova Senha <span class="text-danger">*</span></small></label>
-                            
+                            <label for="confirmar_senha" class="form-label mb-1 fw-bold text-dark"><small>Repetir Nova
+                                    Senha <span class="text-danger">*</span></small></label>
+
                             <div class="input-group">
-                                <input type="password" name="confirmar_senha" id="confirmar_senha" maxlength="50" placeholder="••••••••" class="form-control p-2 border-end-0" required>
-                                <button class="btn border border-start-0 bg-white text-secondary" type="button" id="btn_olho_confirmar">
+                                <input type="password" name="confirmar_senha" id="confirmar_senha" maxlength="50"
+                                    placeholder="••••••••" class="form-control p-2 border-end-0" required>
+                                <button class="btn border border-start-0 bg-white text-secondary" type="button"
+                                    id="btn_olho_confirmar">
                                     <i class="bi bi-eye-slash" id="icone_confirmar"></i>
                                 </button>
                             </div>
-                            
-                            <small id="texto_aviso_igualdade" class="text-danger fw-semibold d-none" style="font-size: 0.75rem;">As senhas não coincidem.</small>
+
+                            <small id="texto_aviso_igualdade" class="text-danger fw-semibold d-none"
+                                style="font-size: 0.75rem;">As senhas não coincidem.</small>
                         </div>
 
                     </div>
 
                     <div class="text-center mt-5">
-                        <button type="submit" class="btn fw-bold p-2 shadow-sm rounded-3 text-white w-100" 
-                                style="background-color: #B22222; border: none; border-bottom: 2px solid #990000; transition: 0.3s;"
-                                onmouseover="this.style.backgroundColor='#990000';" 
-                                onmouseout="this.style.backgroundColor='#B22222';">
+                        <button type="submit" class="btn fw-bold p-2 shadow-sm rounded-3 text-white w-100"
+                            style="background-color: #B22222; border: none; border-bottom: 2px solid #990000; transition: 0.3s;"
+                            onmouseover="this.style.backgroundColor='#990000';"
+                            onmouseout="this.style.backgroundColor='#B22222';">
                             <a href="../index.html">SALVAR NOVA SENHA</a>
                         </button>
                     </div>
@@ -76,8 +85,13 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    
+    <footer>
+        <img src="../assets/CoraA7A3o_de_cristal_em_tons_vibrantes.png" alt="coração de cristal">
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
     <script src="../js/scripts_globais.js"></script>
 </body>
 
