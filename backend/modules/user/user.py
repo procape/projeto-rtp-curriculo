@@ -14,8 +14,8 @@ class User():
         return user_list
     def get_self(self, id_user):
         with engine.connect() as conn:
-            query = (select(self.user)
-                     .where(self.user.c.id == id_user))
+            lista = conn.execute(select(self.user).where(self.user.c.id == id_user))
+            return lista
     def updt(self, id_user, dados):
         with engine.begin() as conn:
             info = (update(self.user)
