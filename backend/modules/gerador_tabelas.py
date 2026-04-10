@@ -11,7 +11,8 @@ class CreateTables():
             Column('cpf', String(100), nullable=False, unique=True),
             Column('nome', String(100), nullable=False),
             Column('email', String(100), nullable=False),
-            Column('senha', String(100), nullable=False)
+            Column('senha', String(100), nullable=False),
+            Column('cargo', String(20), nullable=False, server_default="usuario"),
         )
 
         curriculo = Table(
@@ -33,4 +34,4 @@ class CreateTables():
             Column('user_id', Integer, ForeignKey('usuario.id', ondelete='SET NULL'), nullable=True)
         )
         meta.create_all(engine)
-teste = CreateTables()
+tabelas = CreateTables()
