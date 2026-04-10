@@ -1,4 +1,18 @@
+body {
+    background-image: url(../assets/PROCAPE_background.png);
+    background-size: cover;
+    background-position: center;
+}
+
+.tela-login {
+    background-image: url(../assets/PROCAPE_background.png);
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
 /* Classes para o Azul Primário */
+
 
 .text-marca-azul {
     color: #1D4587 !important;
@@ -64,10 +78,22 @@
 
 .sessao-titulo {
     color: #1D4587;
-    
+
     font-weight: bold;
     border-bottom: 2px solid #e9ecef;
     padding-bottom: 5px;
     margin-bottom: 20px;
     margin-top: 10px;
+}
+
+footer img {
+    width: 6.75rem;
+    /* Você pode ajustar para um valor fixo em px (ex: 60px) se a porcentagem bugar no celular */
+    position: fixed;
+    bottom: 60px;
+    /* Distância da borda inferior */
+    right: 60px;
+    /* Distância da borda direita */
+    z-index: 1000;
+    /* Garante que a logo fique por cima de outros elementos */
 }
