@@ -22,7 +22,7 @@ def lista_user():
     return jsonify(response), 200
 
 @app.route('user/put/<int:id>', methods=['PUT'])
-def updt_curr(id):
+def updt_user(id):
     try:
         dados = request.get_json()
         if not dados:
@@ -33,7 +33,7 @@ def updt_curr(id):
     return jsonify(response),200
 
 @app.route('user/delete/<int:id>', methods=['DELETE'])
-def del_curr(id):
+def del_user(id):
     try:
         response = user_Vazio.remove(id)
     except:
