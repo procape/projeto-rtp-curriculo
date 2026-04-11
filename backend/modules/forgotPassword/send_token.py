@@ -3,7 +3,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 def create_token():
-    return secrets.token_urlsafe(6)  
+    return secrets.token_urlsafe(6)
 
 def send_email(recipient, token):
     sender = "rtpsistema@gmail.com"

@@ -23,3 +23,12 @@ class User():
         with engine.begin() as conn:
             info = (delete(self.user).where(self.user.c.id == id_user))
             conn.execute(info)
+
+    def update_password_by_email(self, email, new_password):
+        with engine.begin() as conn:
+            stmt = (
+                update(self.user)
+                .where(self.user.c.email == email)
+                .values(senha=new_password)
+            )
+            conn.execute(stmt)
