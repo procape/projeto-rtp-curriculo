@@ -12,6 +12,10 @@ class User():
             lista = conn.execute(select(self.user))
             user_list = [dict(r._mapping) for r in lista]
         return user_list
+    def get_self(self, id_user):
+        with engine.connect() as conn:
+            lista = conn.execute(select(self.user).where(self.user.c.id == id_user))
+            return lista
     def updt(self, id_user, dados):
         with engine.begin() as conn:
             info = (update(self.user)
