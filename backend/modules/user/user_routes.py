@@ -144,6 +144,6 @@ def reset_password():
     except Exception as e:
         return jsonify({"erro": str(e)}), 400    
 
-# @user_bp.route('/ping', methods=["GET"])
-# def ping():
-#     return jsonify({"status": "Funcionou esssa bagaça"}), 200
+@user_bp.route('/ping', methods=["GET"])
+def ping():
+    return jsonify({"status": "Funcionou esssa bagaça"}), 200
