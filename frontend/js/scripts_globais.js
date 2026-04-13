@@ -262,3 +262,48 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+// implementação com o Back
+
+const form = document.getElementById('formRegistro');
+const url = 'http://127.0.0.1:5000/user/post';
+
+form.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Impede página de recarregar
+
+    // 1. Captura os dados
+    const formData = new FormData(form);
+    const dados = Object.fromEntries(formData);
+
+    // 2. Validação de segurança simples
+    if (dados.senha !== dados.confirmar_senha) {
+        alert("As senhas não coincidem!");
+        return;
+    }
+
+    try {
+        const resposta = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nome_completo: dados.nome_completo,
+                email: dados.email,
+                senha: dados.senha
+            })
+        });
+
+        const resultado = await resposta.json();
+
+        if (resposta.ok) {
+            alert('Conta criada com sucesso!');
+            window.location.href = '../index.html'; // redireciona para a tela de login
+            alert('Erro: ' + (resultado.mensagem || 'Falha ao registrar'));
+        }
+
+    } catch (erro) {
+        console.error('Erro na conexão:', erro);
+        alert('Servidor fora do ar ou erro de rede.');
+    }
+});
