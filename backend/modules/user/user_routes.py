@@ -17,7 +17,7 @@ def check_role_user(cargo):
             verify_jwt_in_request()
             jwt = get_jwt()
             if jwt.get("cargo") != cargo:
-                return jsonify({"Acesso negado"})
+                return jsonify({"status": "Acesso negado"})
             return f(*args, **kwargs)
         return checker_role_user
     return wrapper
@@ -31,7 +31,7 @@ def user_or_admin_user():
             jwt = get_jwt()
             user_id = get_jwt_identity()
             if jwt.get("cargo") != "admin" or str(user_id) != str(id_url):
-                return jsonify({"Acesso negado"})
+                return jsonify({"status": "Acesso negado"})
             return f(*args, **kwargs)
         return checker_user
     return wrapper
@@ -48,7 +48,7 @@ def cria_user():
         return jsonify({"status": "erro", "mensagem": str(e)}), 400
 
 @user_bp.route('/get', methods=['GET'])
-@check_role_user("admin")
+@jwt_required()
 def lista_user():
     try:
         response = user_obj.get()

@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // 4. Envia para o servidor Flask
       // ATENÇÃO: Confirme com a equipe do Back-end se a rota é exatamente essa!
-      fetch("http://127.0.0.1:5000/api/login", {
+      fetch("http://localhost:5000/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -266,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // implementação com o Back
 
 const form = document.getElementById('formRegistro');
-const url = 'http://127.0.0.1:5000/user/post';
+const url = 'http://localhost:5000/user/post';
 
 form.addEventListener('submit', async (event) => {
     event.preventDefault(); // Impede página de recarregar
@@ -321,7 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Só executa o fetch se a tabela existir na tela atual (ou seja, no Dashboard)
     if (corpoTabela) {
         
-        fetch('http://127.0.0.1:5000/user/get')
+        fetch('http://localhost:5000/user/get')
         .then(resposta => resposta.json())
         .then(listaDeUsuarios => {
             

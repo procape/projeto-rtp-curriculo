@@ -5,7 +5,7 @@ from database.connection import engine, meta
 
 class CreateTables():
     def __init__(self):
-        usuario = Table(
+        self.usuario = Table(
             'usuario', meta,
             Column('id', Integer, primary_key=True, autoincrement=True),
             Column('cpf', String(100), nullable=False, unique=True),
@@ -16,7 +16,7 @@ class CreateTables():
             keep_existing=True,
         )
 
-        curriculo = Table(
+        self.curriculo = Table(
             'curriculo', meta,
             Column('id', Integer, primary_key=True, autoincrement=True),
             Column('nome_completo', String(100), nullable=False),
