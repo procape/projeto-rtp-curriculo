@@ -1,38 +1,39 @@
-from flask_jwt_extended import get_jwt, verify_jwt_in_request, jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required
 from flask import Blueprint, request, jsonify
 from datetime import timedelta, datetime
 from modules.user.user import User
-from functools import wraps
 from modules.forgot.send_token import *
-
+from config. settings import *
+from functools import wraps
 user_bp = Blueprint('user_bp', __name__, url_prefix='/user')
 user_obj = User()
 
 tokenSaved= {}
-def check_role(cargo):
-    def wrapper(fn):
-        @wraps(fn)
-        def checker(*args, **kwargs):
+
+def check_role_user(cargo):
+    def wrapper(f):
+        @wraps(f)
+        def checker_role_user(*args, **kwargs):
             verify_jwt_in_request()
             jwt = get_jwt()
             if jwt.get("cargo") != cargo:
                 return jsonify({"Acesso negado"})
-            return fn(*args, **kwargs)
-        return checker
+            return f(*args, **kwargs)
+        return checker_role_user
     return wrapper
 
-def user_or_admin():
-    def wrapper(fn):
-        @wraps(fn)
-        def checker(*args, **kwargs):
+def user_or_admin_user():
+    def wrapper(f):
+        @wraps(f)
+        def checker_user(*args, **kwargs):
             verify_jwt_in_request()
             id_url = kwargs.get("url_id")
             jwt = get_jwt()
             user_id = get_jwt_identity()
             if jwt.get("cargo") != "admin" or str(user_id) != str(id_url):
                 return jsonify({"Acesso negado"})
-            return fn(*args, **kwargs)
-        return checker
+            return f(*args, **kwargs)
+        return checker_user
     return wrapper
 
 @user_bp.route('/post', methods=['POST'])
@@ -47,7 +48,7 @@ def cria_user():
         return jsonify({"status": "erro", "mensagem": str(e)}), 400
 
 @user_bp.route('/get', methods=['GET'])
-@check_role("admin")
+@check_role_user("admin")
 def lista_user():
     try:
         response = user_obj.get()
@@ -65,7 +66,7 @@ def get_self(url_id):
         return jsonify({"status": "erro", "mensagem": str(e)})
 
 @user_bp.route('/put/<int:url_id>', methods=['PUT'])
-@user_or_admin()
+@user_or_admin_user()
 @jwt_required()
 def updt_user_route(url_id):
     dados = request.get_json()
@@ -78,7 +79,7 @@ def updt_user_route(url_id):
         return jsonify({"status": "erro", "mensagem": str(e)}), 400
 
 @user_bp.route('/delete/<int:url_id>', methods=['DELETE'])
-@check_role("admin")
+@check_role_user("admin")
 def del_user_route(url_id):
     try:
         user_obj.remove(url_id)
@@ -142,3 +143,7 @@ def reset_password():
 
     except Exception as e:
         return jsonify({"erro": str(e)}), 400    
+
+# @user_bp.route('/ping', methods=["GET"])
+# def ping():
+#     return jsonify({"status": "Funcionou esssa bagaça"}), 200

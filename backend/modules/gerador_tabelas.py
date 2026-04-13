@@ -13,6 +13,7 @@ class CreateTables():
             Column('email', String(100), nullable=False),
             Column('senha', String(100), nullable=False),
             Column('cargo', String(20), nullable=False, server_default="usuario"),
+            keep_existing=True,
         )
 
         curriculo = Table(
@@ -31,7 +32,9 @@ class CreateTables():
             Column('observacoes', String(255)),
             Column('data_cad', DateTime, server_default=func.now()),
             Column('data_updt', DateTime, onupdate=func.now()),
-            Column('user_id', Integer, ForeignKey('usuario.id', ondelete='SET NULL'), nullable=True)
+            Column('user_id', Integer, ForeignKey('usuario.id', ondelete='SET NULL'), nullable=True),
+            keep_existing=True
         )
         meta.create_all(engine)
+        
 tabelas = CreateTables()
