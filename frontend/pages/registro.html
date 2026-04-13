@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
+</head>
+
+<body class="bg-light">
+    <div class="d-flex justify-content-center align-items-center min-vh-100 py-5">
+
+        <div class="card shadow rounded-4 border-0 p-0 text-start" style="width: 500px; max-width: 95%;">
+
+            <div class="p-3 rounded-top-4 text-center"
+                style="background-color: #B22222; border-bottom: 2px solid #990000;">
+                <h3 class="m-0 text-white fw-bold h4">CRIAR CONTA</h3>
+            </div>
+
+            <div class="card-body p-4 pt-4">
+                <form method="POST" class="mb-0">
+                    <div class="row g-3">
+
+                        <div class="col-12">
+                            <label for="nome_completo" class="form-label mb-1 fw-bold text-dark"><small>Nome Completo
+                                    <span class="text-danger">*</span></small></label>
+                            <input type="text" name="nome_completo" id="nome_completo" maxlength="100"
+                                placeholder="Nome Completo" class="form-control p-2 apenas-letras" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="email" class="form-label mb-1 fw-bold text-dark"><small>E-mail <span
+                                        class="text-danger">*</span></small></label>
+                            <input type="email" name="email" id="email" maxlength="150" placeholder="seu@email.com"
+                                class="form-control p-2" required>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="senha" class="form-label mb-1 fw-bold text-dark"><small>Criar Senha <span
+                                        class="text-danger">*</span></small></label>
+
+                            <div class="input-group">
+                                <input type="password" name="senha" id="senha" maxlength="50" placeholder="••••••••"
+                                    class="form-control p-2 border-end-0" required>
+
+                                <button class="btn border border-start-0 bg-white text-secondary" type="button"
+                                    id="btn_olho_senha">
+                                    <i class="bi bi-eye-slash" id="icone_senha"></i>
+                                </button>
+                            </div>
+
+                            <div class="progress mt-2" style="height: 5px;">
+                                <div id="barra_forca" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+                            </div>
+                            <small id="texto_forca" class="text-muted fw-semibold" style="font-size: 0.75rem;">Mínimo de
+                                8 caracteres.</small>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <label for="confirmar_senha" class="form-label mb-1 fw-bold text-dark"><small>Repetir Senha
+                                    <span class="text-danger">*</span></small></label>
+
+                            <div class="input-group">
+                                <input type="password" name="confirmar_senha" id="confirmar_senha" maxlength="50"
+                                    placeholder="••••••••" class="form-control p-2 border-end-0" required>
+
+                                <button class="btn border border-start-0 bg-white text-secondary" type="button"
+                                    id="btn_olho_confirmar">
+                                    <i class="bi bi-eye-slash" id="icone_confirmar"></i>
+                                </button>
+                            </div>
+
+                            <small id="texto_aviso_igualdade" class="text-danger fw-semibold d-none"
+                                style="font-size: 0.75rem;">As senhas não coincidem.</small>
+                        </div>
+                        <div class="text-center mt-2">
+                            <button type="submit" class="btn fw-bold p-2 shadow-sm rounded-3 text-white w-100"
+                                style="background-color: #B22222; border: none; border-bottom: 2px solid #990000; transition: 0.3s;"
+                                onmouseover="this.style.backgroundColor='#990000';"
+                                onmouseout="this.style.backgroundColor='#B22222';">
+                                REGISTRAR
+                            </button>
+                        </div>
+
+                        <p class="text-center mt-4 mb-0 text-secondary">
+                            <small>Já tem uma conta? <a href="../index.html" class="text-decoration-none fw-bold"
+                                    style="color: #1D4587;">Faça login</a></small>
+                        </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script src="../js/scripts_globais.js"></script>
+
+</body>
+
+</html>
