@@ -34,7 +34,7 @@ def user_or_admin():
 
 @curriculo_bp.route('/post', methods=['POST'])
 @jwt_required
-@user_or_admin
+@user_or_admin()
 def cria_curr():
     dados = request.get_json()
     if not dados:
@@ -56,7 +56,7 @@ def lista_curr():
         return jsonify({"status": "erro", "mensagem": str(e)}), 400
 
 @curriculo_bp.route('/getself/<int:url_id>', methods=['GET'])
-@user_or_admin
+@user_or_admin()
 @jwt_required
 def lista_self_curr(url_id):
     try:
@@ -68,7 +68,7 @@ def lista_self_curr(url_id):
 
 @curriculo_bp.route('/put/<int:id>', methods=['PUT'])
 @jwt_required
-@user_or_admin
+@user_or_admin()
 def updt_curr_route(id):
     dados = request.get_json()
     if not dados:
