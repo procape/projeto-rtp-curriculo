@@ -307,3 +307,62 @@ form.addEventListener('submit', async (event) => {
         alert('Servidor fora do ar ou erro de rede.');
     }
 });
+
+
+// ==========================================
+// 8. DASHBOARD (BUSCANDO LISTA DE USUÁRIOS)
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const corpoTabela = document.getElementById('corpo_tabela_usuarios');
+    const contadorRegistros = document.getElementById('contador_registros');
+
+    // Só executa o fetch se a tabela existir na tela atual (ou seja, no Dashboard)
+    if (corpoTabela) {
+        
+        fetch('http://127.0.0.1:5000/user/get')
+        .then(resposta => resposta.json())
+        .then(listaDeUsuarios => {
+            
+            // Limpa a mensagem de "Carregando..."
+            corpoTabela.innerHTML = '';
+
+            // Se houver usuários no banco, desenha a tabela
+            if (listaDeUsuarios.length > 0) {
+                listaDeUsuarios.forEach(usuario => {
+                    const tr = document.createElement('tr');
+                    
+                    // Ajuste 'usuario.nome', etc., com os nomes reais das colunas do seu Banco de Dados
+                    tr.innerHTML = `
+                        <td>${usuario.nome || 'Não informado'}</td>
+                        <td>${usuario.area || 'Não informada'}</td>
+                        <td>${usuario.escolaridade || 'Não informada'}</td>
+                        <td class="text-end">
+                            <button class="btn btn-sm text-primary p-0 me-2">Ver</button>
+                            <button type="button" class="btn btn-sm text-danger p-0" data-bs-toggle="modal" data-bs-target="#modalExcluir" onclick="prepararExclusao(${usuario.id})">
+                                Excluir
+                            </button>
+                        </td>
+                    `;
+                    corpoTabela.appendChild(tr);
+                });
+
+                // Atualiza o contador lá embaixo
+                contadorRegistros.innerText = `Mostrando ${listaDeUsuarios.length} registros`;
+                
+            } else {
+                // Se o banco estiver vazio
+                corpoTabela.innerHTML = '<tr><td colspan="4" class="text-center text-secondary py-4">Nenhum currículo cadastrado ainda.</td></tr>';
+                contadorRegistros.innerText = `Mostrando 0 registros`;
+            }
+            
+        })
+        .catch(erro => {
+            console.error("Erro na busca do Dashboard:", erro);
+            corpoTabela.innerHTML = '<tr><td colspan="4" class="text-center text-danger py-4">Erro de conexão com o banco de dados. Verifique se o Back-end está rodando.</td></tr>';
+            contadorRegistros.innerText = `Erro de conexão`;
+        });
+        
+    }
+});
