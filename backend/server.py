@@ -10,7 +10,10 @@ from flask_cors import CORS
 load_dotenv()
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+    CORS(app, origins=[
+        "http://127.0.0.1:5500",
+        "http://localhost:5500"
+    ])
     gerador_tabelas.CreateTables()
     app.config["JWT_SECRET_KEY"] = os.getenv("JWT_KEY")
     jwt = JWTManager(app)

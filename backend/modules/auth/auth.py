@@ -11,6 +11,7 @@ def login():
     dados = request.get_json()
     tabela = tabelas.usuario
     query = select(tabela).where(tabela.c.email == dados.get("email"))
+    print(dados.get("email"))
     with engine.connect() as conn:
         user = conn.execute(query).fetchone()
     
@@ -21,7 +22,8 @@ def login():
             additional_claims=cargo,
         )
         return jsonify(access_token=token), 200
-    return jsonify({"Erro de login"}), 401
+    return jsonify({"status": "Erro de login"}), 401
+
 
 @auth_bp.route('/ping', methods=["GET"])
 def ping():

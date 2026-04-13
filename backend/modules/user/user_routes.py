@@ -17,7 +17,7 @@ def check_role_user(cargo):
             verify_jwt_in_request()
             jwt = get_jwt()
             if jwt.get("cargo") != cargo:
-                return jsonify({"status": "Acesso negado"})
+                return jsonify({"status": "Acesso negado"}), 403
             return f(*args, **kwargs)
         return checker_role_user
     return wrapper
@@ -48,7 +48,7 @@ def cria_user():
         return jsonify({"status": "erro", "mensagem": str(e)}), 400
 
 @user_bp.route('/get', methods=['GET'])
-@jwt_required()
+@check_role_user("admin")
 def lista_user():
     try:
         response = user_obj.get()
@@ -67,7 +67,6 @@ def get_self(url_id):
 
 @user_bp.route('/put/<int:url_id>', methods=['PUT'])
 @user_or_admin_user()
-@jwt_required()
 def updt_user_route(url_id):
     dados = request.get_json()
     if not dados:

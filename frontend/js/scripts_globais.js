@@ -243,15 +243,25 @@ document.addEventListener("DOMContentLoaded", function () {
         body: JSON.stringify(dadosDoLogin),
       })
         .then((resposta) => resposta.json())
-        .then((retornoDoFlask) => {
-          // 5. Analisa a resposta do Flask
-          if (retornoDoFlask.sucesso === true) {
-            // Login autorizado! Vai para o currículo
-            window.location.href = "pages/meu_curriculo.html";
-          } else {
-            // Login negado! Exibe o erro do back-end
-            alert("Ops! " + retornoDoFlask.mensagem);
+        .then(async (resposta) => {
+
+          if (!resposta.ok) {
+            throw new Error(
+              resposta.mensagem ||
+              resposta.status ||
+              resposta.msg ||
+              "Erro ao fazer login"
+            );
           }
+
+          return retornoDoFlask;
+        })
+        .then((retornoDoFlask) => {
+          localStorage.setItem("token", retornoDoFlask.access_token);
+          window.location.href = "pages/meu_curriculo.html";
+        })
+        .catch((erro) => {
+          alert("Ops! " + erro.message);
         })
         .catch((erro) => {
           console.error("Erro na comunicação com o Flask:", erro);
@@ -268,46 +278,47 @@ document.addEventListener("DOMContentLoaded", function () {
 const form = document.getElementById('formRegistro');
 const url = 'http://localhost:5000/user/post';
 
-form.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Impede página de recarregar
+if (form){
+  form.addEventListener('submit', async (event) => {
+      event.preventDefault(); // Impede página de recarregar
 
-    // 1. Captura os dados
-    const formData = new FormData(form);
-    const dados = Object.fromEntries(formData);
+      // 1. Captura os dados
+      const formData = new FormData(form);
+      const dados = Object.fromEntries(formData);
 
-    // 2. Validação de segurança simples
-    if (dados.senha !== dados.confirmar_senha) {
-        alert("As senhas não coincidem!");
-        return;
-    }
+      // 2. Validação de segurança simples
+      if (dados.senha !== dados.confirmar_senha) {
+          alert("As senhas não coincidem!");
+          return;
+      }
 
-    try {
-        const resposta = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                nome_completo: dados.nome_completo,
-                email: dados.email,
-                senha: dados.senha
-            })
-        });
+      try {
+          const resposta = await fetch(url, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  nome_completo: dados.nome_completo,
+                  email: dados.email,
+                  senha: dados.senha
+              })
+          });
 
-        const resultado = await resposta.json();
+          const resultado = await resposta.json();
 
-        if (resposta.ok) {
-            alert('Conta criada com sucesso!');
-            window.location.href = '../index.html'; // redireciona para a tela de login
-            alert('Erro: ' + (resultado.mensagem || 'Falha ao registrar'));
-        }
+          if (resposta.ok) {
+              alert('Conta criada com sucesso!');
+              window.location.href = '../index.html'; // redireciona para a tela de login
+              alert('Erro: ' + (resultado.mensagem || 'Falha ao registrar'));
+          }
 
-    } catch (erro) {
-        console.error('Erro na conexão:', erro);
-        alert('Servidor fora do ar ou erro de rede.');
-    }
-});
-
+      } catch (erro) {
+          console.error('Erro na conexão:', erro);
+          alert('Servidor fora do ar ou erro de rede.');
+      }
+  });
+}
 
 // ==========================================
 // 8. DASHBOARD (BUSCANDO LISTA DE USUÁRIOS)
@@ -321,8 +332,27 @@ document.addEventListener('DOMContentLoaded', function() {
     // Só executa o fetch se a tabela existir na tela atual (ou seja, no Dashboard)
     if (corpoTabela) {
         
-        fetch('http://localhost:5000/user/get')
-        .then(resposta => resposta.json())
+        const token = localStorage.getItem("token");
+
+        if (!token) {
+          alert("Faça login primeiro!");
+          window.location.href = "../index.html";
+          return;
+        }
+
+        fetch("http://localhost:5000/user/get", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+          }
+        })
+        .then(resposta => {
+          if (!resposta.ok) {
+            throw new Error(`Erro HTTP: ${resposta.status}`);
+          }
+          return resposta.json();
+        })
         .then(listaDeUsuarios => {
             
             // Limpa a mensagem de "Carregando..."
