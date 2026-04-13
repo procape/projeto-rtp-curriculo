@@ -14,6 +14,10 @@ class Curriculo():
             lista = conn.execute(select(self.curr))
             curr_list = [dict(r._mapping) for r in lista]
             return curr_list
+    def get_self(self, id_curr):
+        with engine.connect() as conn:
+            lista = conn.execute(select(self.curr).where(self.curr.c.id == id_curr))
+            return lista
     def updt(self, id_curriculo, dados):
         with engine.begin() as conn:
             info = (update(self.curr)
