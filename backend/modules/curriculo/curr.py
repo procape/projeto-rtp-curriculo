@@ -22,10 +22,10 @@ class Curriculo():
             )
             return [dict(r._mapping) for r in lista]
 
-    def updt(self, id_curriculo, dados):
+    def updt(self, user_id, dados):
         with engine.begin() as conn:
             conn.execute(
-                update(self.curr).where(self.curr.c.id == id_curriculo).values(dados)
+                update(self.curr).where(self.curr.c.user_id == user_id).values(dados)
             )
 
     def remove(self, id_curr):

@@ -40,6 +40,12 @@ def cria_user():
     dados = request.get_json()
     if not dados:
         return jsonify({"erro": "JSON inválido ou ausente"}), 400
+    for campo in ["cpf", "nome", "email", "senha"]:
+        if not dados.get(campo):
+            return jsonify({"erro": f"Campo '{campo}' é obrigatório"}), 400
+    dados["cargo"] = "usuario"
+    if user_obj.get_by_email(dados["email"]):
+        return jsonify({"erro": "E-mail já cadastrado"}), 409
     try:
         user_obj.post(dados)
         return jsonify({"status": "sucesso"}), 201

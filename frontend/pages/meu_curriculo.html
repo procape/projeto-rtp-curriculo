@@ -31,15 +31,15 @@
                 <div class="row">
                     <div class="col-md-12">
                         <p class="info-label">Nome Completo</p>
-                        <p class="info-valor">Fulano de Tal</p>
+                        <p class="info-valor" id="curr_nome">-</p>
                     </div>
                     <div class="col-md-6">
                         <p class="info-label">E-mail</p>
-                        <p class="info-valor">seu@email.com</p>
+                        <p class="info-valor" id="curr_email">-</p>
                     </div>
                     <div class="col-md-6">
                         <p class="info-label">Telefone/Contato</p>
-                        <p class="info-valor">(81) 99999-0000</p>
+                        <p class="info-valor" id="curr_telefone">-</p>
                     </div>
                 </div>
 
@@ -47,23 +47,19 @@
                 <div class="row">
                     <div class="col-md-8">
                         <p class="info-label">Rua / Logradouro</p>
-                        <p class="info-valor">Avenida Marechal Floriano Peixoto</p>
-                    </div>
-                    <div class="col-md-4">
-                        <p class="info-label">Número</p>
-                        <p class="info-valor">123B</p>
+                        <p class="info-valor" id="curr_logradouro">-</p>
                     </div>
                     <div class="col-md-4">
                         <p class="info-label">Bairro</p>
-                        <p class="info-valor">Centro</p>
+                        <p class="info-valor" id="curr_bairro">-</p>
                     </div>
                     <div class="col-md-5">
                         <p class="info-label">Cidade</p>
-                        <p class="info-valor">Recife</p>
+                        <p class="info-valor" id="curr_cidade">-</p>
                     </div>
                     <div class="col-md-3">
-                        <p class="info-label">CEP / UF</p>
-                        <p class="info-valor">50000-000 / PE</p>
+                        <p class="info-label">UF</p>
+                        <p class="info-valor" id="curr_uf">-</p>
                     </div>
                 </div>
 
@@ -71,36 +67,36 @@
                 <div class="row">
                     <div class="col-md-6">
                         <p class="info-label">Escolaridade</p>
-                        <p class="info-valor">Ensino superior completo</p>
+                        <p class="info-valor" id="curr_escolaridade">-</p>
                     </div>
                     <div class="col-md-6">
                         <p class="info-label">Tempo de Experiência</p>
-                        <p class="info-valor">2 anos</p>
+                        <p class="info-valor" id="curr_experiencia">-</p>
                     </div>
                     <div class="col-md-12">
                         <p class="info-label">Área de Atuação</p>
-                        <p class="info-valor">Desenvolvimento Web Full-stack</p>
+                        <p class="info-valor" id="curr_atuacao">-</p>
                     </div>
                     <div class="col-md-12">
                         <p class="info-label">Habilidades Técnicas</p>
-                        <p class="info-valor">HTML, CSS, JavaScript, React, Tailwind CSS, PHP, SQL e TypeScript. Uso de Figma e GitHub.</p>
+                        <p class="info-valor" id="curr_habilidades">-</p>
                     </div>
                     <div class="col-md-12">
                         <p class="info-label">Observações Adicionais</p>
-                        <p class="info-valor">Disponibilidade para início imediato. Portfólio atualizado no GitHub.</p>
+                        <p class="info-valor" id="curr_observacoes">-</p>
                     </div>
                 </div>
 
                 <div class="text-center mt-5 mb-2 d-flex justify-content-center gap-3">
-                    
-                    <button type="button" class="btn btn-light border fw-bold text-secondary px-4 shadow-sm">
-                        <i class="bi bi-arrow-left me-2"></i> <a href="../index.html">SAIR</a>
+
+                    <button type="button" class="btn btn-light border fw-bold text-secondary px-4 shadow-sm" onclick="logout()">
+                        <i class="bi bi-arrow-left me-2"></i> SAIR
                     </button>
 
-                    <button type="button" id="btn_editar_curriculo" class="btn fw-bold text-white px-4 shadow-sm" 
+                    <a href="cadastro_curriculo.html" id="btn_editar_curriculo" class="btn fw-bold text-white px-4 shadow-sm"
                             style="background-color: #1D4587; border: none; border-bottom: 2px solid #102a54;">
-                        <i class="bi bi-pencil-square me-2"></i> <a href="cadastro_curriculo.html">EDITAR MEUS DADOS</a>
-                    </button>
+                        <i class="bi bi-pencil-square me-2"></i> EDITAR MEUS DADOS
+                    </a>
 
                 </div>
             </div>
@@ -113,6 +109,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script src="../js/scripts_globais.js"></script>
+    <script src="../js/meu_curriculo.js"></script>
 </body>
 
 </html>

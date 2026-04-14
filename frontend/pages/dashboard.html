@@ -29,7 +29,7 @@
                 </a>
             </li>
             <li class="nav-item mt-4">
-                <a class="nav-link mx-2 text-danger" href="../index.html">
+                <a class="nav-link mx-2 text-danger" href="#" onclick="logout(); return false;">
                     <i class="bi bi-box-arrow-right"></i>
                     <span class="link-text">Sair</span>
                 </a>
@@ -81,6 +81,34 @@
                     </div>
                 </div>
             </div>
+        <div class="modal fade" id="modalVerCurriculo" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #B22222;">
+                        <h5 class="modal-title text-white fw-bold">Detalhes do Curriculo</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body px-4">
+                        <div class="row g-3">
+                            <div class="col-12"><p class="info-label mb-0">Nome Completo</p><p class="info-valor" id="modal_nome">-</p></div>
+                            <div class="col-md-6"><p class="info-label mb-0">E-mail</p><p class="info-valor" id="modal_email">-</p></div>
+                            <div class="col-md-6"><p class="info-label mb-0">Telefone</p><p class="info-valor" id="modal_telefone">-</p></div>
+                            <div class="col-md-8"><p class="info-label mb-0">Logradouro</p><p class="info-valor" id="modal_logradouro">-</p></div>
+                            <div class="col-md-4"><p class="info-label mb-0">Bairro</p><p class="info-valor" id="modal_bairro">-</p></div>
+                            <div class="col-md-6"><p class="info-label mb-0">Cidade</p><p class="info-valor" id="modal_cidade">-</p></div>
+                            <div class="col-md-6"><p class="info-label mb-0">Escolaridade</p><p class="info-valor" id="modal_escolaridade">-</p></div>
+                            <div class="col-md-6"><p class="info-label mb-0">Experiencia</p><p class="info-valor" id="modal_experiencia">-</p></div>
+                            <div class="col-md-6"><p class="info-label mb-0">Area de Atuacao</p><p class="info-valor" id="modal_atuacao">-</p></div>
+                            <div class="col-12"><p class="info-label mb-0">Habilidades</p><p class="info-valor" id="modal_habilidades">-</p></div>
+                            <div class="col-12"><p class="info-label mb-0">Observacoes</p><p class="info-valor" id="modal_observacoes">-</p></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
     <footer>
@@ -92,5 +120,6 @@
     crossorigin="anonymous"></script>
 
 <script src="../js/scripts_globais.js"></script>
+<script src="../js/dashboard.js"></script>
 
 </html>

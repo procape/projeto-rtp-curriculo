@@ -26,12 +26,18 @@
 
             <div class="card-body p-4 pt-4">
 
-                <p class="text-secondary mb-4 text-center" style="font-size: 0.95rem;">
-                    Digite sua nova senha abaixo. Certifique-se de usar uma senha forte.
+                <p class="text-secondary mb-3 text-center" style="font-size: 0.9rem;">
+                    Token enviado para: <strong id="email_info"></strong>
                 </p>
 
                 <form method="POST" action="" class="mb-0">
                     <div class="row g-3">
+
+                        <div class="col-12">
+                            <label for="token_recuperacao" class="form-label mb-1 fw-bold text-dark"><small>Token de Recuperação <span class="text-danger">*</span></small></label>
+                            <input type="text" id="token_recuperacao" maxlength="20"
+                                placeholder="Digite o token recebido por e-mail" class="form-control p-2" required>
+                        </div>
 
                         <div class="col-12">
                             <label for="senha" class="form-label mb-1 fw-bold text-dark"><small>Nova Senha <span
@@ -77,7 +83,7 @@
                             style="background-color: #B22222; border: none; border-bottom: 2px solid #990000; transition: 0.3s;"
                             onmouseover="this.style.backgroundColor='#990000';"
                             onmouseout="this.style.backgroundColor='#B22222';">
-                            <a href="../index.html">SALVAR NOVA SENHA</a>
+                            SALVAR NOVA SENHA
                         </button>
                     </div>
                 </form>
@@ -93,6 +99,7 @@
         crossorigin="anonymous"></script>
 
     <script src="../js/scripts_globais.js"></script>
+    <script src="../js/nova_senha.js"></script>
 </body>
 
 </html>

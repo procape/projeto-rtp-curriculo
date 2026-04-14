@@ -27,6 +27,12 @@
                     <div class="row g-3">
 
                         <div class="col-12">
+                            <label for="cpf" class="form-label mb-1 fw-bold text-dark"><small>CPF <span class="text-danger">*</span></small></label>
+                            <input type="text" name="cpf" id="cpf" maxlength="11"
+                                placeholder="Somente números" class="form-control p-2 apenas-numeros" required>
+                        </div>
+
+                        <div class="col-12">
                             <label for="nome_completo" class="form-label mb-1 fw-bold text-dark"><small>Nome Completo
                                     <span class="text-danger">*</span></small></label>
                             <input type="text" name="nome_completo" id="nome_completo" maxlength="100"
@@ -101,6 +107,7 @@
         crossorigin="anonymous"></script>
 
     <script src="../js/scripts_globais.js"></script>
+    <script src="../js/registro.js"></script>
 
 </body>
 

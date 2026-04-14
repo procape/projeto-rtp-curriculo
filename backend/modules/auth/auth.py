@@ -26,7 +26,7 @@ def login():
             identity=str(user.id),
             additional_claims={"role": user.cargo},
         )
-        return jsonify(access_token=token), 200
+        return jsonify(access_token=token, user_id=user.id, cargo=user.cargo), 200
     return jsonify({"status": "Erro de login"}), 401
 
 
