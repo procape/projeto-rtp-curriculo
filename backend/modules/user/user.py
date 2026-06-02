@@ -42,6 +42,13 @@ class User():
             ).fetchone()
             return dict(resultado._mapping) if resultado else None
 
+    def get_by_email(self, email):
+        with engine.connect() as conn:
+            resultado = conn.execute(
+                select(self.user).where(self.user.c.email == email)
+            ).fetchone()
+            return dict(resultado._mapping) if resultado else None
+
     def update_password_by_cpf(self, cpf, new_password):
         hashed = bcrypt.generate_password_hash(new_password).decode('utf-8')
         with engine.begin() as conn:
