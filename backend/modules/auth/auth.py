@@ -17,7 +17,7 @@ tokenSaved = {}
 def login():
     dados = request.get_json()
     tabela = tabelas.usuario
-    query = select(tabela).where(tabela.c.email == dados.get("email"))
+    query = select(tabela).where(tabela.c.cpf == dados.get("cpf"))
     with engine.connect() as conn:
         user = conn.execute(query).fetchone()
 
@@ -33,22 +33,22 @@ def login():
 @auth_bp.route('/forgot-password', methods=["POST"])
 def forgot_password():
     dados = request.get_json()
-    email = dados.get("email")
+    cpf = dados.get("cpf")
 
-    if not email:
-        return jsonify({"erro": "Email obrigatório"}), 400
+    if not cpf:
+        return jsonify({"erro": "cpf obrigatório"}), 400
 
     try:
-        user = user_obj.get_by_email(email)
+        user = user_obj.get_by_cpf(cpf)
         if not user:
             return jsonify({"erro": "Usuário não encontrado"}), 404
 
         token = create_token()
-        tokenSaved[email] = {
+        tokenSaved[cpf] = {
             "token": token,
             "expira": datetime.now() + timedelta(minutes=10)
         }
-        send_email(email, token)
+        send_email(cpf, token)
         return jsonify({"status": "Token enviado"}), 200
 
     except Exception as e:
@@ -58,14 +58,14 @@ def forgot_password():
 @auth_bp.route('/reset-password', methods=["PUT"])
 def reset_password():
     dados = request.get_json()
-    email = dados.get("email")
+    cpf = dados.get("cpf")
     token = dados.get("token")
     new_password = dados.get("senha")
 
-    if not email or not token or not new_password:
+    if not cpf or not token or not new_password:
         return jsonify({"erro": "Dados incompletos"}), 400
 
-    registro = tokenSaved.get(email)
+    registro = tokenSaved.get(cpf)
 
     if not registro:
         return jsonify({"erro": "Token não encontrado"}), 400
@@ -77,8 +77,8 @@ def reset_password():
         return jsonify({"erro": "Token expirado"}), 400
 
     try:
-        user_obj.update_password_by_email(email, new_password)
-        del tokenSaved[email]
+        user_obj.update_password_by_cpf(cpf, new_password)
+        del tokenSaved[cpf]
         return jsonify({"status": "Senha atualizada com sucesso"}), 200
 
     except Exception as e:

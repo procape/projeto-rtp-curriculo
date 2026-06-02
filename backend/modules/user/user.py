@@ -35,16 +35,16 @@ class User():
         with engine.begin() as conn:
             conn.execute(delete(self.user).where(self.user.c.id == id_user))
 
-    def get_by_email(self, email):
+    def get_by_cpf(self, cpf):
         with engine.connect() as conn:
             resultado = conn.execute(
-                select(self.user).where(self.user.c.email == email)
+                select(self.user).where(self.user.c.cpf == cpf)
             ).fetchone()
             return dict(resultado._mapping) if resultado else None
 
-    def update_password_by_email(self, email, new_password):
+    def update_password_by_cpf(self, cpf, new_password):
         hashed = bcrypt.generate_password_hash(new_password).decode('utf-8')
         with engine.begin() as conn:
             conn.execute(
-                update(self.user).where(self.user.c.email == email).values(senha=hashed)
+                update(self.user).where(self.user.c.cpf == cpf).values(senha=hashed)
             )
