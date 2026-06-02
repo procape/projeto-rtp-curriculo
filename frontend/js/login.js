@@ -6,14 +6,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     formLogin.addEventListener('submit', async function (e) {
         e.preventDefault()
-        const email = document.getElementById('email').value
+        const cpf = document.getElementById('cpf').value
         const senha = document.getElementById('senha').value
 
         try {
             const resposta = await fetch(`${API_BASE}/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, senha })
+                body: JSON.stringify({ cpf, senha })
             })
             const dados = await resposta.json()
             if (!resposta.ok) throw new Error(dados.status || dados.mensagem || 'Erro ao fazer login')
