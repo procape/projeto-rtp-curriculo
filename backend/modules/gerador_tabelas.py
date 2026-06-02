@@ -30,6 +30,7 @@ class CreateTables():
             Column('atuacao', String(150), nullable=False),
             Column('habilidades', String(255), nullable=False),
             Column('observacoes', String(255)),
+            Column('arquivo', String(255), nullable=True),
             Column('data_cad', DateTime, server_default=func.now()),
             Column('data_updt', DateTime, onupdate=func.now()),
             Column('user_id', Integer, ForeignKey('usuario.id', ondelete='SET NULL'), nullable=True),

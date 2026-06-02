@@ -42,6 +42,27 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.getElementById('curr_observacoes').textContent = curr.observacoes || 'Nenhuma'
 
         localStorage.setItem('curriculo_id', curr.id)
+        // show arquivo if present
+        if (curr.arquivo) {
+            const fileUrl = `${API_BASE}/curriculo/file/${curr.arquivo}`
+            const section = document.getElementById('curr_file_section')
+            section.innerHTML = `\n+                <div class="text-center">\n+                    <a href="${fileUrl}" target="_blank" class="btn btn-primary mb-2">Abrir PDF</a>\n+                    <button id="btn_remover_arquivo" class="btn btn-danger ms-2">Remover arquivo</button>\n+                    <div class="mt-3">\n+                        <iframe src="${fileUrl}" style="width:100%;height:600px;" frameborder="0"></iframe>\n+                    </div>\n+                </div>\n+            `
+            const btnRem = document.getElementById('btn_remover_arquivo')
+            if (btnRem) {
+                btnRem.addEventListener('click', async () => {
+                    if (!confirm('Remover arquivo do currículo?')) return
+                    try {
+                        const res = await fetch(`${API_BASE}/curriculo/${user_id}/file`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } })
+                        const js = await res.json()
+                        if (!res.ok) throw new Error(js.mensagem || js.erro || 'Erro')
+                        alert('Arquivo removido')
+                        section.innerHTML = ''
+                    } catch (err) {
+                        alert('Erro: ' + err.message)
+                    }
+                })
+            }
+        }
     } catch (erro) {
         console.error('Erro ao carregar curriculo:', erro)
     }
