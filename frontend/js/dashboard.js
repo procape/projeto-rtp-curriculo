@@ -79,6 +79,8 @@ function prepararVer(id) {
     const curr = curriculosData.find(c => c.id === id)
     if (!curr) return
 
+    const modalFileSection = document.getElementById('modal_file_section')
+
     document.getElementById('modal_nome').textContent = curr.nome_completo || '-'
     document.getElementById('modal_email').textContent = curr.email || '-'
     document.getElementById('modal_telefone').textContent = curr.telefone || '-'
@@ -90,6 +92,40 @@ function prepararVer(id) {
     document.getElementById('modal_atuacao').textContent = curr.atuacao || '-'
     document.getElementById('modal_habilidades').textContent = curr.habilidades || '-'
     document.getElementById('modal_observacoes').textContent = curr.observacoes || 'Nenhuma'
+
+    if (curr.arquivo) {
+        const fileUrl = `${API_BASE}/curriculo/file/${encodeURIComponent(curr.arquivo)}`
+        modalFileSection.innerHTML = `
+            <div class="text-center">
+                <a href="${fileUrl}" target="_blank" class="btn btn-primary mb-3">Abrir arquivo</a>
+                <button type="button" id="btn_remover_arquivo" class="btn btn-danger mb-3 ms-2">Remover arquivo</button>
+                <div class="mt-3">
+                    <iframe src="${fileUrl}" style="width:100%;height:500px;" frameborder="0"></iframe>
+                </div>
+            </div>
+        `
+        const btnRem = document.getElementById('btn_remover_arquivo')
+        if (btnRem) {
+            btnRem.addEventListener('click', async () => {
+                if (!confirm('Remover arquivo do currículo?')) return
+                try {
+                    const token = localStorage.getItem('token')
+                    const resposta = await fetch(`${API_BASE}/curriculo/${curr.id}/file`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    })
+                    const data = await resposta.json()
+                    if (!resposta.ok) throw new Error(data.mensagem || data.erro || 'Erro ao remover arquivo')
+                    alert('Arquivo removido com sucesso')
+                    modalFileSection.innerHTML = '<div class="text-center text-secondary">Nenhum arquivo anexado.</div>'
+                } catch (erro) {
+                    alert('Erro ao remover arquivo: ' + erro.message)
+                }
+            })
+        }
+    } else {
+        modalFileSection.innerHTML = '<div class="text-center text-secondary">Nenhum arquivo anexado.</div>'
+    }
 }
 
 function logout() {

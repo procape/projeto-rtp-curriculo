@@ -46,7 +46,7 @@ def user_or_admin_curr():
 def cria_curr():
     try:
         # support multipart/form-data with file upload or JSON
-        if request.files:
+        if request.files or request.form:
             form = request.form.to_dict()
             f = request.files.get('arquivo')
             if f and f.filename:
@@ -91,7 +91,7 @@ def lista_self_curr(url_id):
 def updt_curr_route(url_id):
     try:
         # support multipart/form-data with file upload or JSON
-        if request.files:
+        if request.files or request.form:
             form = request.form.to_dict()
             f = request.files.get('arquivo')
             if f and f.filename:
@@ -146,6 +146,16 @@ def delete_file(url_id):
 @check_role_curr("admin")
 def del_curr_route(url_id):
     try:
+        # remove arquivo do filesystem, se existir
+        lista = curriculo_obj.get_self(url_id)
+        if lista:
+            curr = lista[0]
+            arquivo = curr.get('arquivo')
+            if arquivo:
+                path = os.path.join(UPLOAD_FOLDER, arquivo)
+                if os.path.exists(path):
+                    os.remove(path)
+
         curriculo_obj.remove(url_id)
         return jsonify({"status": "sucesso"}), 200
     except Exception as e:

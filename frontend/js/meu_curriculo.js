@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (curr.arquivo) {
             const fileUrl = `${API_BASE}/curriculo/file/${curr.arquivo}`
             const section = document.getElementById('curr_file_section')
-            section.innerHTML = `\n+                <div class="text-center">\n+                    <a href="${fileUrl}" target="_blank" class="btn btn-primary mb-2">Abrir PDF</a>\n+                    <button id="btn_remover_arquivo" class="btn btn-danger ms-2">Remover arquivo</button>\n+                    <div class="mt-3">\n+                        <iframe src="${fileUrl}" style="width:100%;height:600px;" frameborder="0"></iframe>\n+                    </div>\n+                </div>\n+            `
+            section.innerHTML = `\n                <div class="text-center">\n                    <a href="${fileUrl}" target="_blank" class="btn btn-primary mb-2">Abrir PDF</a>\n                    <button id="btn_remover_arquivo" class="btn btn-danger ms-2">Remover arquivo</button>\n                    <div class="mt-3">\n                        <iframe src="${fileUrl}" style="width:100%;height:600px;" frameborder="0"></iframe>\n                    </div>\n                </div>\n            `
             const btnRem = document.getElementById('btn_remover_arquivo')
             if (btnRem) {
                 btnRem.addEventListener('click', async () => {
