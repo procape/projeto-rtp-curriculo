@@ -83,7 +83,11 @@ def lista_self_curr(url_id):
         response = curriculo_obj.get_self(url_id)
         return jsonify(response), 200
     except Exception as e:
-        return jsonify({"status": "erro", "mensagem": str(e)}), 400
+        import traceback
+        tb = traceback.format_exc()
+        print('Error in lista_self_curr:', str(e))
+        print(tb)
+        return jsonify({"status": "erro", "mensagem": str(e), "trace": tb}), 400
 
 
 @curriculo_bp.route('/<int:url_id>', methods=['PUT'])

@@ -40,6 +40,8 @@ services:
       db: 
         condition:
           service_healthy
+    volumes:
+      - ./backend/uploads:/app/backend/uploads
 
 # Frontend
   frontend:
