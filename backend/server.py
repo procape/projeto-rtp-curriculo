@@ -18,6 +18,7 @@ def create_app():
         "http://localhost:5500",
         "http://localhost",
         "http://localhost:80",
+        "http://localhost:8080",
         "http://127.0.0.1"
     ])
     gerador_tabelas.CreateTables()
