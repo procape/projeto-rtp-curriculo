@@ -3,6 +3,7 @@ from flask_jwt_extended import JWTManager
 from modules.user.user_routes import user_bp
 from modules.curriculo.curriculo_routes import curriculo_bp
 from modules.auth.auth import auth_bp
+from modules.rh.rh_routes import rh_bp
 from modules import gerador_tabelas
 from extensions import bcrypt
 import os
@@ -28,4 +29,5 @@ def create_app():
     app.register_blueprint(user_bp)
     app.register_blueprint(curriculo_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(rh_bp)
     return app

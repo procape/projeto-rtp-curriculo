@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     await carregarCurriculos()
 
+    // exemplo de chamada para o endpoint RH usando o mesmo token JWT
+    await carregarColaboradoresRH()
+
     document.getElementById('confirmarExclusao').addEventListener('click', async function () {
         const id = this.getAttribute('data-id')
         try {
@@ -68,6 +71,31 @@ async function carregarCurriculos() {
     } catch (erro) {
         corpoTabela.innerHTML = '<tr><td colspan="4" class="text-center text-danger py-4">Erro de conexao com o servidor.</td></tr>'
         contador.textContent = 'Erro de conexao'
+    }
+}
+
+// Exemplo: busca colaboradores do sistema RH (rota protegida por JWT)
+async function carregarColaboradoresRH() {
+    const token = localStorage.getItem('token')
+    try {
+        const resposta = await fetch(`${API_BASE}/rh/colaboradores`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
+
+        if (resposta.status === 404) {
+            const data = await resposta.json()
+            // Mensagem informativa quando não há tabela ou registros
+            alert(data.mensagem || data.erro || 'Nenhum colaborador encontrado.')
+            return
+        }
+
+        if (!resposta.ok) throw new Error('Erro ao buscar colaboradores RH')
+
+        const dados = await resposta.json()
+        console.log('Colaboradores RH:', dados)
+        // aqui você pode integrar os dados à interface, por exemplo atualizando uma tabela
+    } catch (erro) {
+        console.error('Erro ao carregar colaboradores RH:', erro)
     }
 }
 

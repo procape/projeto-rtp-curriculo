@@ -203,6 +203,15 @@ O projeto utiliza:
 - .env (docker/produção)
 - .env.example (template)
 
+Para o segundo banco de dados MySQL remoto, você pode usar as variáveis:
+
+- `MYSQL2_HOST`
+- `MYSQL2_PORT`
+- `MYSQL2_USER`
+- `MYSQL2_PASSWORD`
+- `MYSQL2_DATABASE`
+- `DATABASE2_URI` (opcional: cadeia de conexão completa)
+
 ---
 
 ## 🎯 Benefícios da arquitetura
