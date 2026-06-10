@@ -74,6 +74,11 @@ def cria_curr():
             dados = filter_curriculo_fields(form)
             cursos = parse_courses_from_form(form)
             f = request.files.get('arquivo')
+            
+            if 'user_id' in dados:
+                dados['user_id'] = int(dados['user_id'])
+            dados.pop('remover_arquivo', None)
+            
             if f and f.filename:
                 filename = secure_filename(f.filename)
                 f.save(os.path.join(UPLOAD_FOLDER, filename))
@@ -134,6 +139,11 @@ def updt_curr_route(url_id):
             dados = filter_curriculo_fields(form)
             cursos = parse_courses_from_form(form)
             f = request.files.get('arquivo')
+            
+            if 'user_id' in dados:
+                dados['user_id'] = int(dados['user_id'])
+            dados.pop('remover_arquivo', None)
+            
             if f and f.filename:
                 filename = secure_filename(f.filename)
                 f.save(os.path.join(UPLOAD_FOLDER, filename))

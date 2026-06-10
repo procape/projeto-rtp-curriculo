@@ -1,5 +1,10 @@
 const API_BASE = 'http://192.168.171.93:5003'
 
+function navigateTo(path) {
+    const base = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1)
+    window.location.href = base + path
+}
+
 let curriculosData = []
 
 document.addEventListener('DOMContentLoaded', async function () {
@@ -8,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     if (!token || cargo !== 'admin') {
         alert('Acesso restrito a administradores.')
-        window.location.href = '../index.html'
+        navigateTo('../index.html')
         return
     }
 
@@ -90,6 +95,13 @@ function prepararVer(id) {
     document.getElementById('modal_escolaridade').textContent = curr.escolaridade || '-'
     document.getElementById('modal_experiencia').textContent = curr.experiencia || 'Nao informada'
     document.getElementById('modal_atuacao').textContent = curr.atuacao || '-'
+
+    const cursos = Array.isArray(curr.cursos) && curr.cursos.length > 0 ? curr.cursos : []
+    const cursosHtml = cursos.length > 0
+        ? cursos.map(c => `<div><strong>${c.curso}</strong>${c.data_conclusao ? ` — ${c.data_conclusao}` : ''}</div>`).join('')
+        : '<span class="text-secondary">Nenhum curso cadastrado.</span>'
+    document.getElementById('modal_cursos').innerHTML = cursosHtml
+
     document.getElementById('modal_habilidades').textContent = curr.habilidades || '-'
     document.getElementById('modal_observacoes').textContent = curr.observacoes || 'Nenhuma'
 
@@ -130,5 +142,5 @@ function prepararVer(id) {
 
 function logout() {
     localStorage.clear()
-    window.location.href = '../index.html'
+    navigateTo('../index.html')
 }

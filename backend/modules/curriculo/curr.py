@@ -34,7 +34,7 @@ class Curriculo():
     def get(self):
         with engine.connect() as conn:
             lista = [dict(r._mapping) for r in conn.execute(select(self.curr))]
-            if not self.cursos:
+            if self.cursos is None:
                 return lista
 
             cursos_rows = [dict(r._mapping) for r in conn.execute(select(self.cursos))]
@@ -55,7 +55,7 @@ class Curriculo():
                 dict(r._mapping)
                 for r in conn.execute(select(self.curr).where(self.curr.c.user_id == user_id))
             ]
-            if not lista or not self.cursos:
+            if not lista or self.cursos is None:
                 return lista
 
             for curr in lista:

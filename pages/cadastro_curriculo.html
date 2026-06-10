@@ -30,55 +30,55 @@
                             <label for="nome_completo" class="form-label mb-1 fw-bold text-dark "><small>Nome Completo
                                     <span class="text-danger">*</span></small></label>
                             <input type="text" name="nome_completo" id="nome_completo" maxlength="100"
-                                placeholder="Nome Completo" class="form-control p-2 apenas-letras bg-body-secondary no-pointer" required readonly>
+                                placeholder="Nome Completo" class="form-control p-2 apenas-letras bg-body-secondary no-pointer" required >
                         </div>
 
                         <div class="col-md-6">
                             <label for="email" class="form-label mb-1 fw-bold text-dark"><small>E-mail <span
                                         class="text-danger">*</span></small></label>
                             <input type="email" name="email" id="email" maxlength="150" placeholder="seu@email.com"
-                                class="form-control p-2 bg-body-secondary no-pointer" required readonly>
+                                class="form-control p-2 bg-body-secondary no-pointer" required >
                         </div>
                         <div class="col-md-6">
                             <label for="telefone" class="form-label mb-1 fw-bold text-dark "><small>Telefone/Contato
                                     <span class="text-danger">*</span></small></label>
                             <input type="text" name="telefone" id="telefone" maxlength="11"
-                                placeholder="(00) 00000-0000" class="form-control p-2 apenas-numeros bg-body-secondary no-pointer" required readonly>
+                                placeholder="(00) 00000-0000" class="form-control p-2 apenas-numeros bg-body-secondary no-pointer" required >
                         </div>
 
                         <div class="col-md-3">
                             <label for="cep" class="form-label mb-1 fw-bold text-dark"><small>CEP <span
                                         class="text-danger">*</span></small></label>
                             <input type="text" name="cep" id="cep" maxlength="9" placeholder="00000-000"
-                                class="form-control p-2 apenas-numeros bg-body-secondary no-pointer" required readonly>
+                                class="form-control p-2 apenas-numeros bg-body-secondary no-pointer" required >
                         </div>
                         <div class="col-md-7">
                             <label for="logradouro" class="form-label mb-1 fw-bold text-dark"><small>Rua /
                                     Logradouro</small></label>
                             <input type="text" name="logradouro" id="logradouro" maxlength="150"
-                                class="form-control p-2 bg-body-secondary no-pointer" required readonly>
+                                class="form-control p-2 bg-body-secondary no-pointer" required >
                         </div>
                         <div class="col-md-2">
                             <label for="numero" class="form-label mb-1 fw-bold text-dark"><small>Número <span
                                         class="text-danger">*</span></small></label>
                             <input type="text" name="numero" id="numero" maxlength="10" class="form-control p-2 bg-body-secondary no-pointer"
-                                required readonly>
+                                required >
                         </div>
 
                         <div class="col-md-5">
                             <label for="bairro" class="form-label mb-1 fw-bold text-dark"><small>Bairro</small></label>
                             <input type="text" name="bairro" id="bairro" maxlength="100"
-                                class="form-control p-2 bg-body-secondary no-pointer" required readonly>
+                                class="form-control p-2 bg-body-secondary no-pointer" required >
                         </div>
                         <div class="col-md-5">
                             <label for="cidade" class="form-label mb-1 fw-bold text-dark"><small>Cidade</small></label>
                             <input type="text" name="cidade" id="cidade" maxlength="100"
-                                class="form-control p-2 bg-body-secondary no-pointer" required readonly>
+                                class="form-control p-2 bg-body-secondary no-pointer" required >
                         </div>
                         <div class="col-md-2">
                             <label for="estado" class="form-label mb-1 fw-bold text-dark"><small>UF</small></label>
                             <input type="text" name="estado" id="estado" maxlength="2"
-                                class="form-control p-2 bg-body-secondary no-pointer" required readonly>
+                                class="form-control p-2 bg-body-secondary no-pointer" required >
                         </div>
 
                         <div class="col-md-6">
@@ -96,6 +96,34 @@
                                     Experiência</small></label>
                             <input type="text" name="tempo_experiencia" id="tempo_experiencia" maxlength="30"
                                 placeholder="Ex: 2 anos" class="form-control p-2">
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <label class="form-label mb-1 fw-bold text-dark">Cursos</label>
+                                </div>
+                                <button type="button" id="btnAddCurso" class="btn btn-sm btn-outline-primary">
+                                    + Adicionar curso
+                                </button>
+                            </div>
+                            <div id="div_cursos_container" class="row g-3"></div>
+                        </div>
+
+                        <div id="curso_template" class="col-md-12 d-none curso-item">
+                            <div class="row g-3 align-items-end">
+                                <div class="col-md-5">
+                                    <label class="form-label mb-1 fw-bold text-dark"><small>Curso</small></label>
+                                    <input type="text" name="curso[]" maxlength="100" placeholder="Ex: Enfermagem" class="form-control p-2 curso-nome">
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label mb-1 fw-bold text-dark"><small></small>Data</small></label>
+                                    <input type="date" name="curso_data[]" class="form-control curso-data">
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-end">
+                                    <button type="button" class="btn btn-danger btn-sm btn-remover-curso w-100">Remover</button>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-md-12">

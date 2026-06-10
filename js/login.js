@@ -1,5 +1,10 @@
 const API_BASE = 'http://192.168.171.93:5003'
 
+function navigateTo(path) {
+    const base = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1)
+    window.location.href = base + path
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const formLogin = document.getElementById('form_login')
     if (!formLogin) return
@@ -23,9 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
             localStorage.setItem('cargo', dados.cargo)
 
             if (dados.cargo === 'admin') {
-                window.location.href = 'pages/dashboard.html'
+                navigateTo('pages/dashboard.html')
             } else {
-                window.location.href = 'pages/meu_curriculo.html'
+                navigateTo('pages/meu_curriculo.html')
             }
         } catch (erro) {
             alert('Erro: ' + erro.message)
