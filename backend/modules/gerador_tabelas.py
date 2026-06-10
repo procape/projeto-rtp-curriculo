@@ -45,6 +45,7 @@ class CreateTables():
             Column('curriculo_id', Integer, ForeignKey('curriculo.id', ondelete='CASCADE'), nullable=False),
             Column('curso', String(100), nullable=False),
             Column('data_conclusao', Date, nullable=True),
+            Column('arquivo_comprovante', String(255), nullable=True), # NOVA COLUNA
             keep_existing=True
         )
 

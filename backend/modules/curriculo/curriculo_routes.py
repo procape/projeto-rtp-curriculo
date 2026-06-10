@@ -3,6 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt, get_jwt_identity, verify_j
 from functools import wraps
 from modules.curriculo.curr import Curriculo
 import os
+import uuid
 from werkzeug.utils import secure_filename
 
 # define upload folder
@@ -13,17 +14,32 @@ curriculo_bp = Blueprint('curriculo_bp', __name__, url_prefix='/curriculo')
 curriculo_obj = Curriculo()
 
 
-def parse_courses_from_form(form):
+def parse_courses_from_form(form, files):
     cursos = []
     nomes = form.getlist('curso[]') or form.getlist('curso') or []
     datas = form.getlist('curso_data[]') or form.getlist('curso_data') or []
+    atuais = form.getlist('curso_arquivo_atual[]') or [] # Pega arquivos que já existiam
+    
     for index, nome in enumerate(nomes):
         nome = nome.strip()
         if not nome:
             continue
+            
+        arquivo_comprovante = atuais[index] if index < len(atuais) and atuais[index] else None
+        
+        # Verifica se foi feito upload de um novo arquivo para este índice
+        file_key = f'curso_arquivo_{index}'
+        if file_key in files:
+            f = files[file_key]
+            if f and f.filename:
+                filename = generate_unique_filename(secure_filename(f.filename))
+                f.save(os.path.join(UPLOAD_FOLDER, filename))
+                arquivo_comprovante = filename
+                
         cursos.append({
             'curso': nome,
-            'data_conclusao': datas[index] if index < len(datas) and datas[index] else None
+            'data_conclusao': datas[index] if index < len(datas) and datas[index] else None,
+            'arquivo_comprovante': arquivo_comprovante
         })
     return cursos
 
@@ -64,6 +80,12 @@ def user_or_admin_curr():
     return wrapper
 
 
+def generate_unique_filename(filename):
+    ext = filename.rsplit('.', 1)[1].lower() if '.' in filename else ''
+    unique_name = uuid.uuid4().hex
+    return f"{unique_name}.{ext}" if ext else unique_name
+
+
 @curriculo_bp.route('', methods=['POST'])
 @jwt_required()
 def cria_curr():
@@ -72,7 +94,7 @@ def cria_curr():
         if request.files or request.form:
             form = request.form
             dados = filter_curriculo_fields(form)
-            cursos = parse_courses_from_form(form)
+            cursos = parse_courses_from_form(form, request.files)
             f = request.files.get('arquivo')
             
             if 'user_id' in dados:
@@ -80,7 +102,7 @@ def cria_curr():
             dados.pop('remover_arquivo', None)
             
             if f and f.filename:
-                filename = secure_filename(f.filename)
+                filename = generate_unique_filename(secure_filename(f.filename))
                 f.save(os.path.join(UPLOAD_FOLDER, filename))
                 dados['arquivo'] = filename
         else:
@@ -137,7 +159,7 @@ def updt_curr_route(url_id):
         if request.files or request.form:
             form = request.form
             dados = filter_curriculo_fields(form)
-            cursos = parse_courses_from_form(form)
+            cursos = parse_courses_from_form(form, request.files)
             f = request.files.get('arquivo')
             
             if 'user_id' in dados:
@@ -145,7 +167,7 @@ def updt_curr_route(url_id):
             dados.pop('remover_arquivo', None)
             
             if f and f.filename:
-                filename = secure_filename(f.filename)
+                filename = generate_unique_filename(secure_filename(f.filename))
                 f.save(os.path.join(UPLOAD_FOLDER, filename))
                 dados['arquivo'] = filename
             if form.get('remover_arquivo') in ['true', 'True', '1']:

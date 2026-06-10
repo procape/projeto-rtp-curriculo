@@ -21,13 +21,14 @@ class Curriculo():
             curriculo_id = result.inserted_primary_key[0]
             if cursos:
                 cursos_to_insert = [
-                    {
-                        'curriculo_id': curriculo_id,
-                        'curso': c.get('curso'),
-                        'data_conclusao': c.get('data_conclusao')
-                    }
-                    for c in cursos if c.get('curso')
-                ]
+                        {
+                            'curriculo_id': curriculo_id,
+                            'curso': c.get('curso'),
+                            'data_conclusao': c.get('data_conclusao'),
+                            'arquivo_comprovante': c.get('arquivo_comprovante')
+                        }
+                        for c in cursos if c.get('curso')
+                    ]
                 if cursos_to_insert:
                     conn.execute(insert(self.cursos), cursos_to_insert)
 
@@ -42,7 +43,8 @@ class Curriculo():
             for curso in cursos_rows:
                 cursos_por_curr[curso['curriculo_id']].append({
                     'curso': curso['curso'],
-                    'data_conclusao': self._format_date(curso['data_conclusao'])
+                    'data_conclusao': self._format_date(curso['data_conclusao']),
+                    'arquivo_comprovante': curso.get('arquivo_comprovante')
                 })
 
             for curr in lista:
@@ -66,7 +68,8 @@ class Curriculo():
                 curr['cursos'] = [
                     {
                         'curso': c['curso'],
-                        'data_conclusao': self._format_date(c['data_conclusao'])
+                        'data_conclusao': self._format_date(c['data_conclusao']),
+                        'arquivo_comprovante': c.get('arquivo_comprovante') # NOVO CAMPO
                     }
                     for c in cursos
                 ]
@@ -88,7 +91,8 @@ class Curriculo():
                         {
                             'curriculo_id': curriculo_id,
                             'curso': c.get('curso'),
-                            'data_conclusao': c.get('data_conclusao')
+                            'data_conclusao': c.get('data_conclusao'),
+                            'arquivo_comprovante': c.get('arquivo_comprovante') # NOVO CAMPO
                         }
                         for c in cursos if c.get('curso')
                     ]

@@ -34,10 +34,10 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         const lista = await resposta.json()
 
-        // if (!Array.isArray(lista) || lista.length === 0) {
-        //     navigateTo('cadastro_curriculo.html')
-        //     return
-        // }
+        if (!Array.isArray(lista) || lista.length === 0) {
+            navigateTo('cadastro_curriculo.html')
+            return
+        }
 
         const curr = lista[0]
 
@@ -53,7 +53,14 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         const cursos = Array.isArray(curr.cursos) && curr.cursos.length > 0 ? curr.cursos : []
         const cursosHtml = cursos.length > 0
-            ? cursos.map(c => `<div><strong>${c.curso}</strong>${c.data_conclusao ? ` — ${c.data_conclusao}` : ''}</div>`).join('')
+            ? cursos.map(c => {
+                let html = `<div class="mb-2 border-bottom pb-2"><strong>${c.curso}</strong>${c.data_conclusao ? ` — ${c.data_conclusao}` : ''}`;
+                if (c.arquivo_comprovante) {
+                    html += `<br><a href="${API_BASE}/curriculo/file/${c.arquivo_comprovante}" target="_blank" class="badge bg-secondary text-decoration-none mt-1"><i class="bi bi-file-earmark-pdf"></i> Visualizar Comprovante</a>`;
+                }
+                html += `</div>`;
+                return html;
+            }).join('')
             : '<span class="text-secondary">Nenhum curso cadastrado.</span>'
         document.getElementById('curr_cursos').innerHTML = cursosHtml
 

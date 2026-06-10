@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const btnAddCurso = document.getElementById('btnAddCurso')
     if (!form) return
 
-    function createCursoItem(value = '', date = '') {
+    function createCursoItem(value = '', date = '', arquivoAtual = '') {
         if (!cursoTemplate) return null
         const clone = cursoTemplate.cloneNode(true)
         clone.classList.remove('d-none')
@@ -29,9 +29,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const inputCurso = clone.querySelector('input[name="curso[]"]')
         const inputData = clone.querySelector('input[name="curso_data[]"]')
         const removerBtn = clone.querySelector('.btn-remover-curso')
+        const inputArquivoAtual = clone.querySelector('.curso-arquivo-atual')
+        const divTextoAtual = clone.querySelector('.arquivo-atual-texto')
 
         if (inputCurso) inputCurso.value = value
         if (inputData) inputData.value = date
+        if (inputArquivoAtual) inputArquivoAtual.value = arquivoAtual
+        
+        if (divTextoAtual && arquivoAtual) {
+            divTextoAtual.innerHTML = `<a href="${API_BASE}/curriculo/file/${arquivoAtual}" target="_blank">Ver comprovante atual</a>`;
+        }
 
         if (removerBtn) {
             removerBtn.addEventListener('click', () => {
@@ -45,9 +52,9 @@ document.addEventListener('DOMContentLoaded', function () {
         return clone
     }
 
-    function addCursoItem(value = '', date = '') {
+    function addCursoItem(value = '', date = '', arquivoAtual = '') {
         if (!cursosContainer) return
-        const item = createCursoItem(value, date)
+        const item = createCursoItem(value, date, arquivoAtual)
         if (item) cursosContainer.appendChild(item)
     }
 
@@ -93,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     cursosContainer.innerHTML = ''
                     const cursos = Array.isArray(curr.cursos) ? curr.cursos : []
                     if (cursos.length > 0) {
-                        cursos.forEach(c => addCursoItem(c.curso || '', c.data_conclusao || ''))
+                        cursos.forEach(c => addCursoItem(c.curso || '', c.data_conclusao || '', c.arquivo_comprovante || ''))
                     } else {
                         addCursoItem()
                     }
@@ -133,15 +140,24 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('observacoes', document.getElementById('observacoes').value)
         formData.append('user_id', parseInt(user_id))
 
+        let index = 0;
         const cursoItems = cursosContainer ? cursosContainer.querySelectorAll('.curso-item') : []
         cursoItems.forEach(item => {
             const cursoInput = item.querySelector('input[name="curso[]"]')
             const dataInput = item.querySelector('input[name="curso_data[]"]')
+            const arquivoAtualInput = item.querySelector('.curso-arquivo-atual')
+            const arquivoInput = item.querySelector('.curso-arquivo')
+
             if (cursoInput && cursoInput.value.trim()) {
                 formData.append('curso[]', cursoInput.value.trim())
-            }
-            if (dataInput && dataInput.value) {
-                formData.append('curso_data[]', dataInput.value)
+                formData.append('curso_data[]', dataInput && dataInput.value ? dataInput.value : '')
+                formData.append('curso_arquivo_atual[]', arquivoAtualInput ? arquivoAtualInput.value : '')
+                
+                // Anexa o novo arquivo associando-o ao índice correto
+                if (arquivoInput && arquivoInput.files && arquivoInput.files[0]) {
+                    formData.append(`curso_arquivo_${index}`, arquivoInput.files[0])
+                }
+                index++;
             }
         })
 

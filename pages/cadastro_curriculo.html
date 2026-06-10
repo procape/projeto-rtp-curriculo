@@ -112,16 +112,22 @@
 
                         <div id="curso_template" class="col-md-12 d-none curso-item">
                             <div class="row g-3 align-items-end">
-                                <div class="col-md-5">
+                                <div class="col-md-4">
                                     <label class="form-label mb-1 fw-bold text-dark"><small>Curso</small></label>
+                                    <input type="hidden" name="curso_arquivo_atual[]" class="curso-arquivo-atual">
                                     <input type="text" name="curso[]" maxlength="100" placeholder="Ex: Enfermagem" class="form-control p-2 curso-nome">
                                 </div>
-                                <div class="col-md-5">
-                                    <label class="form-label mb-1 fw-bold text-dark"><small></small>Data</small></label>
+                                <div class="col-md-3">
+                                    <label class="form-label mb-1 fw-bold text-dark"><small>Data</small></label>
                                     <input type="date" name="curso_data[]" class="form-control curso-data">
                                 </div>
+                                <div class="col-md-3">
+                                    <label class="form-label mb-1 fw-bold text-dark"><small>Comprovante (PDF)</small></label>
+                                    <input type="file" accept="application/pdf" class="form-control curso-arquivo p-1">
+                                    <div class="form-text arquivo-atual-texto mt-1" style="font-size: 0.75rem;"></div>
+                                </div>
                                 <div class="col-md-2 d-flex justify-content-end">
-                                    <button type="button" class="btn btn-danger btn-sm btn-remover-curso w-100">Remover</button>
+                                    <button type="button" class="btn btn-danger btn-sm btn-remover-curso w-100 p-2">Remover</button>
                                 </div>
                             </div>
                         </div>
