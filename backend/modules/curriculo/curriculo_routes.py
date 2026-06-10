@@ -13,6 +13,29 @@ curriculo_bp = Blueprint('curriculo_bp', __name__, url_prefix='/curriculo')
 curriculo_obj = Curriculo()
 
 
+def parse_courses_from_form(form):
+    cursos = []
+    nomes = form.getlist('curso[]') or form.getlist('curso') or []
+    datas = form.getlist('curso_data[]') or form.getlist('curso_data') or []
+    for index, nome in enumerate(nomes):
+        nome = nome.strip()
+        if not nome:
+            continue
+        cursos.append({
+            'curso': nome,
+            'data_conclusao': datas[index] if index < len(datas) and datas[index] else None
+        })
+    return cursos
+
+
+def filter_curriculo_fields(form):
+    return {
+        key: value
+        for key, value in form.items()
+        if key not in ('curso[]', 'curso_data[]', 'curso', 'curso_data')
+    }
+
+
 def check_role_curr(cargo):
     def wrapper(f):
         @wraps(f)
@@ -45,22 +68,33 @@ def user_or_admin_curr():
 @jwt_required()
 def cria_curr():
     try:
-        # support multipart/form-data with file upload or JSON
+        cursos = []
         if request.files or request.form:
-            form = request.form.to_dict()
+            form = request.form
+            dados = filter_curriculo_fields(form)
+            cursos = parse_courses_from_form(form)
             f = request.files.get('arquivo')
             if f and f.filename:
                 filename = secure_filename(f.filename)
                 f.save(os.path.join(UPLOAD_FOLDER, filename))
-                form['arquivo'] = filename
-            dados = form
+                dados['arquivo'] = filename
         else:
-            dados = request.get_json()
+            dados = request.get_json() or {}
+            cursos_json = dados.pop('cursos', None) or []
+            if isinstance(cursos_json, list):
+                cursos = [
+                    {
+                        'curso': curso.get('curso') if isinstance(curso, dict) else curso,
+                        'data_conclusao': curso.get('data_conclusao') if isinstance(curso, dict) else None
+                    }
+                    for curso in cursos_json
+                    if (isinstance(curso, dict) and curso.get('curso')) or isinstance(curso, str)
+                ]
 
         if not dados:
             return jsonify({"erro": "JSON inválido ou ausente"}), 400
 
-        curriculo_obj.post(dados)
+        curriculo_obj.post(dados, cursos=cursos)
         return jsonify({"status": "sucesso"}), 201
     except Exception as e:
         return jsonify({"status": "erro", "mensagem": str(e)}), 400
@@ -94,25 +128,35 @@ def lista_self_curr(url_id):
 @user_or_admin_curr()
 def updt_curr_route(url_id):
     try:
-        # support multipart/form-data with file upload or JSON
+        cursos = []
         if request.files or request.form:
-            form = request.form.to_dict()
+            form = request.form
+            dados = filter_curriculo_fields(form)
+            cursos = parse_courses_from_form(form)
             f = request.files.get('arquivo')
             if f and f.filename:
                 filename = secure_filename(f.filename)
                 f.save(os.path.join(UPLOAD_FOLDER, filename))
-                form['arquivo'] = filename
-            # if user requested removal of arquivo
+                dados['arquivo'] = filename
             if form.get('remover_arquivo') in ['true', 'True', '1']:
-                form['arquivo'] = None
-            dados = form
+                dados['arquivo'] = None
         else:
-            dados = request.get_json()
+            dados = request.get_json() or {}
+            cursos_json = dados.pop('cursos', None) or []
+            if isinstance(cursos_json, list):
+                cursos = [
+                    {
+                        'curso': curso.get('curso') if isinstance(curso, dict) else curso,
+                        'data_conclusao': curso.get('data_conclusao') if isinstance(curso, dict) else None
+                    }
+                    for curso in cursos_json
+                    if (isinstance(curso, dict) and curso.get('curso')) or isinstance(curso, str)
+                ]
 
         if not dados:
             return jsonify({"erro": "JSON inválido ou ausente"}), 400
 
-        curriculo_obj.updt(url_id, dados)
+        curriculo_obj.updt(url_id, dados, cursos=cursos)
         return jsonify({"status": "sucesso"}), 200
     except Exception as e:
         return jsonify({"status": "erro", "mensagem": str(e)}), 400

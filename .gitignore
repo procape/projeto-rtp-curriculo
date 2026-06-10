@@ -42,11 +42,6 @@ venv/
 Thumbs.db
 
 # =========================
-# Docker
-# =========================
-docker-compose.override.yml
-
-# =========================
 # Coverage / testes
 # =========================
 .coverage

@@ -99,6 +99,34 @@
                         </div>
 
                         <div class="col-md-12">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <div>
+                                    <label class="form-label mb-1 fw-bold text-dark">Cursos</label>
+                                </div>
+                                <button type="button" id="btnAddCurso" class="btn btn-sm btn-outline-primary">
+                                    + Adicionar curso
+                                </button>
+                            </div>
+                            <div id="div_cursos_container" class="row g-3"></div>
+                        </div>
+
+                        <div id="curso_template" class="col-md-12 d-none curso-item">
+                            <div class="row g-3 align-items-end">
+                                <div class="col-md-5">
+                                    <label class="form-label mb-1 fw-bold text-dark"><small>Curso</small></label>
+                                    <input type="text" name="curso[]" maxlength="100" placeholder="Ex: Enfermagem" class="form-control p-2 curso-nome">
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label mb-1 fw-bold text-dark"><small></small>Data</small></label>
+                                    <input type="date" name="curso_data[]" class="form-control curso-data">
+                                </div>
+                                <div class="col-md-2 d-flex justify-content-end">
+                                    <button type="button" class="btn btn-danger btn-sm btn-remover-curso w-100">Remover</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
                             <label for="area_atuacao" class="form-label mb-1 fw-bold text-dark"><small>Área de Atuação
                                     <span class="text-danger">*</span></small></label>
                             <input type="text" name="area_atuacao" id="area_atuacao" maxlength="100"

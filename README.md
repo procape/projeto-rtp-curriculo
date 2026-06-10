@@ -42,7 +42,6 @@ backend/
 ├── routes/
 ├── main.py
 ├── server.py
-└── Dockerfile
 
 ---
 
@@ -184,23 +183,12 @@ Responsável por subir o servidor HTTP e tratar as requisições.
 
 ---
 
-## 🐳 Docker
-
-A aplicação é containerizada com:
-
-- backend (Python)
-- frontend (Bootstrap)
-- MySQL
-
----
-
 ## ⚙️ Variáveis de ambiente
 
 O projeto utiliza:
 
 - backend/.env (desenvolvimento backend)
 - frontend/.env (desenvolvimento frontend)
-- .env (docker/produção)
 - .env.example (template)
 
 ---

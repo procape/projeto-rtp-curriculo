@@ -90,13 +90,6 @@ function prepararVer(id) {
     document.getElementById('modal_escolaridade').textContent = curr.escolaridade || '-'
     document.getElementById('modal_experiencia').textContent = curr.experiencia || 'Nao informada'
     document.getElementById('modal_atuacao').textContent = curr.atuacao || '-'
-
-    const cursos = Array.isArray(curr.cursos) && curr.cursos.length > 0 ? curr.cursos : []
-    const cursosHtml = cursos.length > 0
-        ? cursos.map(c => `<div><strong>${c.curso}</strong>${c.data_conclusao ? ` — ${c.data_conclusao}` : ''}</div>`).join('')
-        : '<span class="text-secondary">Nenhum curso cadastrado.</span>'
-    document.getElementById('modal_cursos').innerHTML = cursosHtml
-
     document.getElementById('modal_habilidades').textContent = curr.habilidades || '-'
     document.getElementById('modal_observacoes').textContent = curr.observacoes || 'Nenhuma'
 

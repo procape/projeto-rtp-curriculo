@@ -20,6 +20,7 @@ def login():
     query = select(tabela).where(tabela.c.cpf == dados.get("cpf"))
     with engine.connect() as conn:
         user = conn.execute(query).fetchone()
+        print(user)
 
     if user and bcrypt.check_password_hash(user.senha, dados.get("senha")):
         token = create_access_token(

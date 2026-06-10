@@ -1,0 +1,5 @@
+● curriculo.service - Backend Flask Curriculo
+     Loaded: loaded (/etc/systemd/system/curriculo.service; enabled; vendor preset: enabled)
+     Active: activating (auto-restart) (Result: exit-code) since Wed 2026-06-10 08:26:37 -03; 37ms ago
+    Process: 3750 ExecStart=/var/www/html/projeto-rtp-curriculo/backend/venv/bin/python main.py [0;1;31m(code=exited, status=203/EXEC)[0m
+   Main PID: 3750 (code=exited, status=203/EXEC)

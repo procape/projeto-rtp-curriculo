@@ -36,6 +36,16 @@ class CreateTables():
             Column('user_id', Integer, ForeignKey('usuario.id', ondelete='SET NULL'), nullable=True),
             keep_existing=True
         )
+
+        self.lista_cursos = Table(
+            'lista_cursos', meta,
+            Column('id', Integer, primary_key=True, autoincrement=True),
+            Column('curriculo_id', Integer, ForeignKey('curriculo.id', ondelete='CASCADE'), nullable=False),
+            Column('curso', String(100), nullable=False),
+            Column('data_conclusao', Date, nullable=True),
+            keep_existing=True
+        )
+
         meta.create_all(engine)
         
 tabelas = CreateTables()
