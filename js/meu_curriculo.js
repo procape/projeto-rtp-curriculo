@@ -1,11 +1,16 @@
 const API_BASE = 'http://192.168.171.93:5003'
 
+function navigateTo(path) {
+    const base = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1)
+    window.location.href = base + path
+}
+
 document.addEventListener('DOMContentLoaded', async function () {
     const token = localStorage.getItem('token')
     const user_id = localStorage.getItem('user_id')
 
     if (!token || !user_id) {
-        window.location.href = '../index.html'
+        navigateTo('../index.html')
         return
     }
 
@@ -16,14 +21,21 @@ document.addEventListener('DOMContentLoaded', async function () {
 
         if (resposta.status === 401 || resposta.status === 403) {
             localStorage.clear()
-            window.location.href = '../index.html'
+            navigateTo('../index.html')
             return
+        }
+
+        if (!resposta.ok) {
+            const erroData = await resposta.json();
+            console.error('Erro detalhado do servidor:', erroData);
+            alert("Erro no servidor: " + (erroData.mensagem || "Verifique o console do navegador."));
+            return;
         }
 
         const lista = await resposta.json()
 
         if (!Array.isArray(lista) || lista.length === 0) {
-            window.location.href = 'cadastro_curriculo.html'
+            navigateTo('cadastro_curriculo.html')
             return
         }
 
@@ -38,6 +50,20 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.getElementById('curr_escolaridade').textContent = curr.escolaridade || '-'
         document.getElementById('curr_experiencia').textContent = curr.experiencia || 'Não informada'
         document.getElementById('curr_atuacao').textContent = curr.atuacao || '-'
+
+        const cursos = Array.isArray(curr.cursos) && curr.cursos.length > 0 ? curr.cursos : []
+        const cursosHtml = cursos.length > 0
+            ? cursos.map(c => {
+                let html = `<div class="mb-2 border-bottom pb-2"><strong>${c.curso}</strong>${c.data_conclusao ? ` — ${c.data_conclusao}` : ''}`;
+                if (c.arquivo_comprovante) {
+                    html += `<br><a href="${API_BASE}/curriculo/file/${c.arquivo_comprovante}" target="_blank" class="badge bg-secondary text-decoration-none mt-1"><i class="bi bi-file-earmark-pdf"></i> Visualizar Comprovante</a>`;
+                }
+                html += `</div>`;
+                return html;
+            }).join('')
+            : '<span class="text-secondary">Nenhum curso cadastrado.</span>'
+        document.getElementById('curr_cursos').innerHTML = cursosHtml
+
         document.getElementById('curr_habilidades').textContent = curr.habilidades || '-'
         document.getElementById('curr_observacoes').textContent = curr.observacoes || 'Nenhuma'
 
@@ -70,5 +96,5 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 function logout() {
     localStorage.clear()
-    window.location.href = '../index.html'
+    navigateTo('../index.html')
 }

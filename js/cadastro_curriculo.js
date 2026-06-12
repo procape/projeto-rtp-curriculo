@@ -1,18 +1,72 @@
 const API_BASE = 'http://192.168.171.93:5003'
 
+function navigateTo(path) {
+    const base = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1)
+    window.location.href = base + path
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const token = localStorage.getItem('token')
     const user_id = localStorage.getItem('user_id')
 
-    // if (!token || !user_id) {
-    //     window.location.href = '../index.html'
-    //     return
-    // }
+    if (!token || !user_id) {
+        navigateTo('../index.html')
+        return
+    }
 
     const form = document.getElementById('formCurriculo')
+    const cursosContainer = document.getElementById('div_cursos_container')
+    const cursoTemplate = document.getElementById('curso_template')
+    const btnAddCurso = document.getElementById('btnAddCurso')
     if (!form) return
 
-    // preload existing curriculo if present and try to populate blocked fields from colaboradores
+    function createCursoItem(value = '', date = '', arquivoAtual = '') {
+        if (!cursoTemplate) return null
+        const clone = cursoTemplate.cloneNode(true)
+        clone.classList.remove('d-none')
+        clone.removeAttribute('id')
+
+        const inputCurso = clone.querySelector('input[name="curso[]"]')
+        const inputData = clone.querySelector('input[name="curso_data[]"]')
+        const removerBtn = clone.querySelector('.btn-remover-curso')
+        const inputArquivoAtual = clone.querySelector('.curso-arquivo-atual')
+        const divTextoAtual = clone.querySelector('.arquivo-atual-texto')
+
+        if (inputCurso) inputCurso.value = value
+        if (inputData) inputData.value = date
+        if (inputArquivoAtual) inputArquivoAtual.value = arquivoAtual
+        
+        if (divTextoAtual && arquivoAtual) {
+            divTextoAtual.innerHTML = `<a href="${API_BASE}/curriculo/file/${arquivoAtual}" target="_blank">Ver comprovante atual</a>`;
+        }
+
+        if (removerBtn) {
+            removerBtn.addEventListener('click', () => {
+                clone.remove()
+                if (cursosContainer && cursosContainer.children.length === 0) {
+                    addCursoItem()
+                }
+            })
+        }
+
+        return clone
+    }
+
+    function addCursoItem(value = '', date = '', arquivoAtual = '') {
+        if (!cursosContainer) return
+        const item = createCursoItem(value, date, arquivoAtual)
+        if (item) cursosContainer.appendChild(item)
+    }
+
+    if (btnAddCurso) {
+        btnAddCurso.addEventListener('click', () => addCursoItem())
+    }
+
+    if (cursosContainer && cursosContainer.children.length === 0) {
+        addCursoItem()
+    }
+
+    // preload existing curriculo if present
     async function preload() {
         try {
             // first try to fetch colaborador data by CPF stored at login
@@ -78,6 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+
     preload()
 
     form.addEventListener('submit', async function (e) {
@@ -93,12 +148,35 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('rua_logradouro', numero ? `${logradouro}, ${numero}` : logradouro)
         formData.append('bairro', document.getElementById('bairro').value)
         formData.append('cidade', document.getElementById('cidade').value)
+        formData.append('cep', document.getElementById('cep').value)
+        formData.append('estado', document.getElementById('estado').value)
         formData.append('escolaridade', document.getElementById('escolaridade').value)
         formData.append('experiencia', document.getElementById('tempo_experiencia').value)
         formData.append('atuacao', document.getElementById('area_atuacao').value)
         formData.append('habilidades', document.getElementById('habilidades_tecnicas').value)
         formData.append('observacoes', document.getElementById('observacoes').value)
         formData.append('user_id', parseInt(user_id))
+
+        let index = 0;
+        const cursoItems = cursosContainer ? cursosContainer.querySelectorAll('.curso-item') : []
+        cursoItems.forEach(item => {
+            const cursoInput = item.querySelector('input[name="curso[]"]')
+            const dataInput = item.querySelector('input[name="curso_data[]"]')
+            const arquivoAtualInput = item.querySelector('.curso-arquivo-atual')
+            const arquivoInput = item.querySelector('.curso-arquivo')
+
+            if (cursoInput && cursoInput.value.trim()) {
+                formData.append('curso[]', cursoInput.value.trim())
+                formData.append('curso_data[]', dataInput && dataInput.value ? dataInput.value : '')
+                formData.append('curso_arquivo_atual[]', arquivoAtualInput ? arquivoAtualInput.value : '')
+                
+                // Anexa o novo arquivo associando-o ao índice correto
+                if (arquivoInput && arquivoInput.files && arquivoInput.files[0]) {
+                    formData.append(`curso_arquivo_${index}`, arquivoInput.files[0])
+                }
+                index++;
+            }
+        })
 
         const fileInput = document.getElementById('arquivo')
         if (fileInput && fileInput.files && fileInput.files[0]) {
@@ -116,7 +194,6 @@ document.addEventListener('DOMContentLoaded', function () {
         try {
             const resposta = await fetch(url, {
                 method: metodo,
-                mode: 'cors',
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
@@ -126,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!resposta.ok) throw new Error(resultado.mensagem || resultado.erro || 'Erro ao salvar curriculo')
 
             alert('Curriculo salvo com sucesso!')
-            window.location.href = 'meu_curriculo.html'
+            navigateTo('meu_curriculo.html')
         } catch (erro) {
             alert('Erro: ' + erro.message)
         }

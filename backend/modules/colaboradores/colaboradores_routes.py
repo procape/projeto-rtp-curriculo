@@ -1,6 +1,6 @@
 import traceback
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from sqlalchemy import select, func
 from database.connection import engine, meta
 
@@ -19,19 +19,15 @@ def get_me():
 
     try:
         user_id_jwt = get_jwt_identity()
+        claim = get_jwt()
+        user_cpf = claim.get("cpf")
         try:
             user_id_jwt = int(user_id_jwt)
         except (TypeError, ValueError):
             pass
-        usuario_table = meta.tables.get('usuario')
-        if usuario_table is None:
-            return jsonify({'erro': 'Tabela usuario não encontrada'}), 500
 
         with engine.connect() as conn:
-            res = conn.execute(select(usuario_table.c.cpf).where(usuario_table.c.id == user_id_jwt)).fetchone()
-            if not res:
-                return jsonify({'erro': 'Usuário não encontrado'}), 404
-            cpf = normalize_cpf(res[0])
+            cpf = normalize_cpf(user_cpf)
 
             col_table = meta.tables.get('colaboradores')
             if col_table is None:

@@ -2,7 +2,6 @@ from collections import defaultdict
 from sqlalchemy import insert, select, update, delete
 from database.connection import engine, meta
 
-
 class Curriculo():
     def __init__(self):
         self.curr = meta.tables.get('curriculo')
@@ -24,17 +23,19 @@ class Curriculo():
                     {
                         'curriculo_id': curriculo_id,
                         'curso': c.get('curso'),
-                        'data_conclusao': c.get('data_conclusao')
+                        'data_conclusao': c.get('data_conclusao'),
+                        'arquivo_comprovante': c.get('arquivo_comprovante')
                     }
                     for c in cursos if c.get('curso')
                 ]
                 if cursos_to_insert:
                     conn.execute(insert(self.cursos), cursos_to_insert)
+        return True
 
     def get(self):
         with engine.connect() as conn:
             lista = [dict(r._mapping) for r in conn.execute(select(self.curr))]
-            if not self.cursos:
+            if self.cursos is None:
                 return lista
 
             cursos_rows = [dict(r._mapping) for r in conn.execute(select(self.cursos))]
@@ -42,7 +43,8 @@ class Curriculo():
             for curso in cursos_rows:
                 cursos_por_curr[curso['curriculo_id']].append({
                     'curso': curso['curso'],
-                    'data_conclusao': self._format_date(curso['data_conclusao'])
+                    'data_conclusao': self._format_date(curso['data_conclusao']),
+                    'arquivo_comprovante': curso.get('arquivo_comprovante')
                 })
 
             for curr in lista:
@@ -55,7 +57,7 @@ class Curriculo():
                 dict(r._mapping)
                 for r in conn.execute(select(self.curr).where(self.curr.c.user_id == user_id))
             ]
-            if not lista or not self.cursos:
+            if not lista or self.cursos is None:
                 return lista
 
             for curr in lista:
@@ -66,7 +68,8 @@ class Curriculo():
                 curr['cursos'] = [
                     {
                         'curso': c['curso'],
-                        'data_conclusao': self._format_date(c['data_conclusao'])
+                        'data_conclusao': self._format_date(c['data_conclusao']),
+                        'arquivo_comprovante': c.get('arquivo_comprovante')
                     }
                     for c in cursos
                 ]
@@ -77,7 +80,7 @@ class Curriculo():
             conn.execute(
                 update(self.curr).where(self.curr.c.user_id == user_id).values(dados)
             )
-            if cursos is not None and self.cursos:
+            if cursos is not None and self.cursos is not None:
                 curriculo_row = conn.execute(
                     select(self.curr.c.id).where(self.curr.c.user_id == user_id)
                 ).first()
@@ -88,15 +91,18 @@ class Curriculo():
                         {
                             'curriculo_id': curriculo_id,
                             'curso': c.get('curso'),
-                            'data_conclusao': c.get('data_conclusao')
+                            'data_conclusao': c.get('data_conclusao'),
+                            'arquivo_comprovante': c.get('arquivo_comprovante')
                         }
                         for c in cursos if c.get('curso')
                     ]
                     if cursos_to_insert:
                         conn.execute(insert(self.cursos), cursos_to_insert)
+        return True
 
     def remove(self, id_curr):
         with engine.begin() as conn:
-            if self.cursos:
+            if self.cursos is not None:
                 conn.execute(delete(self.cursos).where(self.cursos.c.curriculo_id == id_curr))
             conn.execute(delete(self.curr).where(self.curr.c.id == id_curr))
+        return True

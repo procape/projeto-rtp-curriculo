@@ -22,9 +22,11 @@ class CreateTables():
             Column('nome_completo', String(100), nullable=False),
             Column('email', String(100), nullable=False, unique=True),
             Column('telefone', String(20), nullable=False),
+            Column('cep', String(20), nullable=False),
             Column('rua_logradouro', String(200), nullable=False),
             Column('bairro', String(100), nullable=False),
             Column('cidade', String(100), nullable=False),
+            Column('estado', String(50), nullable=False),
             Column('escolaridade', String(100), nullable=False),
             Column('experiencia', String(50), nullable=True),
             Column('atuacao', String(150), nullable=False),
@@ -33,7 +35,7 @@ class CreateTables():
             Column('arquivo', String(255), nullable=True),
             Column('data_cad', DateTime, server_default=func.now()),
             Column('data_updt', DateTime, onupdate=func.now()),
-            Column('user_id', Integer, ForeignKey('usuario.id', ondelete='SET NULL'), nullable=True),
+            Column('user_id', Integer, nullable=True),
             keep_existing=True
         )
 
@@ -43,6 +45,7 @@ class CreateTables():
             Column('curriculo_id', Integer, ForeignKey('curriculo.id', ondelete='CASCADE'), nullable=False),
             Column('curso', String(100), nullable=False),
             Column('data_conclusao', Date, nullable=True),
+            Column('arquivo_comprovante', String(255), nullable=True), # NOVA COLUNA
             keep_existing=True
         )
 

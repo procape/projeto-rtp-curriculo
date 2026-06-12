@@ -119,9 +119,65 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // 4. BUSCA DE CEP AUTOMÁTICA (ViaCEP) - desativada por requisito de segurança
-  // A busca automática foi removida: os campos de endereço serão preenchidos
-  // a partir dos dados trazidos pelo backend via CPF associado ao usuário.
+  // 4. BUSCA DE CEP AUTOMÁTICA (ViaCEP)
+
+  const campoCep = document.getElementById("cep");
+
+  // Só vai rodar a lógica se o campo de CEP existir na tela
+  if (campoCep) {
+    campoCep.addEventListener("blur", function (event) {
+      // Pega o valor e tira tudo que não for número
+      let cep = event.target.value.replace(/\D/g, "");
+
+      if (cep.length === 8) {
+        let url = `https://viacep.com.br/ws/${cep}/json/`;
+
+        fetch(url)
+          .then((resposta) => resposta.json())
+          .then((dados) => {
+            if (!dados.erro) {
+              // Preenche os campos
+              document.getElementById("logradouro").value = dados.logradouro;
+              document.getElementById("bairro").value = dados.bairro;
+              document.getElementById("cidade").value = dados.localidade;
+              document.getElementById("estado").value = dados.uf;
+
+              // Joga o cursor para o campo de número
+              document.getElementById("numero").focus();
+            } else {
+              alert(
+                "CEP não encontrado. Por favor, verifique o número digitado.",
+              );
+              limparCamposEndereco();
+            }
+          })
+          .catch((erro) => {
+            console.error(
+              "Erro ao conectar com o serviço de busca de CEP.",
+              erro,
+            );
+          });
+      } else {
+        if (cep.length > 0) {
+          alert("Formato de CEP inválido.");
+          limparCamposEndereco();
+        }
+      }
+    });
+  }
+
+  // Função auxiliar para limpar os campos caso o CEP dê erro
+  function limparCamposEndereco() {
+    // if para evitar erros caso a página não tenha um dos campos
+    if (document.getElementById("logradouro"))
+      document.getElementById("logradouro").value = "";
+    if (document.getElementById("bairro"))
+      document.getElementById("bairro").value = "";
+    if (document.getElementById("cidade"))
+      document.getElementById("cidade").value = "";
+    if (document.getElementById("estado"))
+      document.getElementById("estado").value = "";
+  }
 });
 
 // 5. Sidebar
